@@ -13,10 +13,7 @@ public class EstadosHilo extends Thread //implements Runneable
 {
     private boolean termino = false;
     
-    public void run()
-    {
-    
-    }
+    // saque el run
     
     public boolean isTerminado()
     {
