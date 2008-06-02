@@ -77,7 +77,7 @@ public class Ventana extends javax.swing.JFrame
         getContentPane().add(btnDescomprimir);
         btnDescomprimir.setBounds(170, 110, 130, 23);
         getContentPane().add(jpbProgreso);
-        jpbProgreso.setBounds(10, 220, 460, 18);
+        jpbProgreso.setBounds(50, 250, 210, 40);
 
         btnComprimir.setText("Comprimir");
         btnComprimir.addActionListener(new java.awt.event.ActionListener() {
@@ -88,14 +88,14 @@ public class Ventana extends javax.swing.JFrame
         getContentPane().add(btnComprimir);
         btnComprimir.setBounds(170, 10, 130, 23);
 
-        btnDetener.setText("Frenar proceso");
+        btnDetener.setText("Detener proceso");
         btnDetener.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDetenerActionPerformed(evt);
             }
         });
         getContentPane().add(btnDetener);
-        btnDetener.setBounds(330, 80, 130, 23);
+        btnDetener.setBounds(90, 200, 130, 23);
 
         txtRutaDescomprimir.setEditable(false);
         getContentPane().add(txtRutaDescomprimir);
@@ -115,7 +115,7 @@ public class Ventana extends javax.swing.JFrame
 
         lblProgreso.setText("Progreso...");
         getContentPane().add(lblProgreso);
-        lblProgreso.setBounds(10, 200, 80, 14);
+        lblProgreso.setBounds(130, 230, 80, 14);
 
         btnArchDescomprimir.setText("Archivo a descomprimir");
         btnArchDescomprimir.addActionListener(new java.awt.event.ActionListener() {
@@ -181,7 +181,7 @@ public class Ventana extends javax.swing.JFrame
         setJMenuBar(mnuMenu);
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-489)/2, (screenSize.height-303)/2, 489, 303);
+        setBounds((screenSize.width-319)/2, (screenSize.height-355)/2, 319, 355);
     }// </editor-fold>//GEN-END:initComponents
 
     private void mnuArchComprimirActionPerformed(java.awt.event.ActionEvent evt)
