@@ -9,7 +9,7 @@ import java.io.*;
 import javax.swing.*;
 import principal.*;
 
-public class ventana extends javax.swing.JFrame
+public class Ventana extends javax.swing.JFrame
 {
     private JFileChooser jfd = new JFileChooser();
     private File f;
@@ -18,7 +18,7 @@ public class ventana extends javax.swing.JFrame
     private Compresor comp = new Compresor();
     
     /** Creates new form VentanaInicial */
-    public ventana()
+    public Ventana()
     {
         initComponents();
     }
@@ -74,7 +74,7 @@ public class ventana extends javax.swing.JFrame
         getContentPane().add(btnDescomprimir);
         btnDescomprimir.setBounds(170, 110, 130, 23);
         getContentPane().add(jpbProgreso);
-        jpbProgreso.setBounds(10, 220, 460, 13);
+        jpbProgreso.setBounds(10, 220, 460, 18);
 
         btnComprimir.setText("Comprimir");
         btnComprimir.addActionListener(new java.awt.event.ActionListener() {
