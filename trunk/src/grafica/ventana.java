@@ -10,7 +10,7 @@ import java.io.*;
 import javax.swing.*;
 import principal.*;
 
-public class Ventana extends javax.swing.JFrame
+public class ventana extends javax.swing.JFrame
 {
     private JFileChooser jfd = new JFileChooser();
     private File f;
@@ -19,7 +19,7 @@ public class Ventana extends javax.swing.JFrame
     private Compresor comp = new Compresor();
     
     /** Creates new form VentanaInicial */
-    public Ventana()
+    public ventana()
     {
         initComponents();
     }
