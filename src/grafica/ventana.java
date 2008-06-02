@@ -184,53 +184,60 @@ public class Ventana extends javax.swing.JFrame
         setBounds((screenSize.width-489)/2, (screenSize.height-303)/2, 489, 303);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnDescomprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescomprimirActionPerformed
-        chequearDescomprimir();
-        limpiar();
-}//GEN-LAST:event_btnDescomprimirActionPerformed
-
-    private void mnuArchComprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArchComprimirActionPerformed
+    private void mnuArchComprimirActionPerformed(java.awt.event.ActionEvent evt)
+    {//GEN-FIRST:event_mnuArchComprimirActionPerformed
         limpiar();
         seleccionar("comp");
-}//GEN-LAST:event_mnuArchComprimirActionPerformed
+    }//GEN-LAST:event_mnuArchComprimirActionPerformed
 
-    private void btnArchComprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArchComprimirActionPerformed
-        limpiar();
-        seleccionar("comp");
-}//GEN-LAST:event_btnArchComprimirActionPerformed
-
-    private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_salirActionPerformed
-
-    private void mnuComprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuComprimirActionPerformed
-        chequearComprimir();
-        limpiar ();
-}//GEN-LAST:event_mnuComprimirActionPerformed
-
-    private void btnComprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprimirActionPerformed
+    private void mnuComprimirActionPerformed(java.awt.event.ActionEvent evt)
+    {//GEN-FIRST:event_mnuComprimirActionPerformed
         chequearComprimir();
         limpiar();
-}//GEN-LAST:event_btnComprimirActionPerformed
+    }//GEN-LAST:event_mnuComprimirActionPerformed
 
-    private void btnDetenerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetenerActionPerformed
-        // comp.interrupt();
-}//GEN-LAST:event_btnDetenerActionPerformed
-
-    private void btnArchDescomprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArchDescomprimirActionPerformed
-        limpiar();
-        seleccionar("descomp"); 
-}//GEN-LAST:event_btnArchDescomprimirActionPerformed
-
-    private void mnuArchDescomprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArchDescomprimirActionPerformed
+    private void mnuArchDescomprimirActionPerformed(java.awt.event.ActionEvent evt)
+    {//GEN-FIRST:event_mnuArchDescomprimirActionPerformed
         limpiar();
         seleccionar("descomp");
     }//GEN-LAST:event_mnuArchDescomprimirActionPerformed
 
-    private void mnuDescomprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuDescomprimirActionPerformed
+    private void mnuDescomprimirActionPerformed(java.awt.event.ActionEvent evt)
+    {//GEN-FIRST:event_mnuDescomprimirActionPerformed
         chequearDescomprimir();
         limpiar();
     }//GEN-LAST:event_mnuDescomprimirActionPerformed
+
+    private void btnArchComprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArchComprimirActionPerformed
+        limpiar();
+        seleccionar("comp");
+    }//GEN-LAST:event_btnArchComprimirActionPerformed
+
+    private void btnComprimirActionPerformed(java.awt.event.ActionEvent evt)
+    {//GEN-FIRST:event_btnComprimirActionPerformed
+        chequearComprimir();
+        limpiar();
+    }//GEN-LAST:event_btnComprimirActionPerformed
+
+    private void btnArchDescomprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArchDescomprimirActionPerformed
+        limpiar();
+        seleccionar("descomp"); 
+    }//GEN-LAST:event_btnArchDescomprimirActionPerformed
+
+    private void btnDescomprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescomprimirActionPerformed
+        chequearDescomprimir();
+        limpiar();
+    }//GEN-LAST:event_btnDescomprimirActionPerformed
+
+    private void btnDetenerActionPerformed(java.awt.event.ActionEvent evt)
+    {//GEN-FIRST:event_btnDetenerActionPerformed
+    // comp.interrupt();
+    }//GEN-LAST:event_btnDetenerActionPerformed
+
+    private void salirActionPerformed(java.awt.event.ActionEvent evt) 
+    {//GEN-FIRST:event_salirActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_salirActionPerformed
     
     /**
       * Clase que selecciona el archivo a comprimir o descomprimir
