@@ -192,7 +192,6 @@ public class ventana extends javax.swing.JFrame
 
     private void codificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codificarActionPerformed
         limpiar ();
-        
     }//GEN-LAST:event_codificarActionPerformed
 
     private void btnComprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprimirActionPerformed
@@ -208,7 +207,7 @@ public class ventana extends javax.swing.JFrame
 }//GEN-LAST:event_btnComprimirActionPerformed
 
     private void btnDetenerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetenerActionPerformed
-        // TODO add your handling code here:
+        // comp.interrupt();
 }//GEN-LAST:event_btnDetenerActionPerformed
 
     private void btnArchDescomprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArchDescomprimirActionPerformed

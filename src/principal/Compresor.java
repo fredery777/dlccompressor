@@ -15,7 +15,9 @@ package principal;
  * @version Octubre de 2007
  */
 import java.io.*;
-public class Compresor
+import hilo.*;
+
+public class Compresor // extends Thread
 {
     private ArbolHuffman ht;
     private RandomAccessFile fuente;
@@ -23,6 +25,9 @@ public class Compresor
     private RandomAccessFile nuevo;
     private String errorCode;
     private int cantSignos;
+    private boolean termino;
+    
+    //private EstadosHilo hilo = null;
 
     /**
      *  Crea un compresor y lo prepara para recibir una tabla de n signos
@@ -51,6 +56,8 @@ public class Compresor
     {
         try
         {  
+            //setComprimido(false);
+            
             //obtengo el nombre del archivo, sin la extensión
             String nombre = fileName.substring( 0, fileName.indexOf(".") );
             
@@ -184,6 +191,8 @@ public class Compresor
             }
             comprimido.close();
             fuente.close();
+            
+            //setComprimido(true);
     
         }
         
@@ -198,11 +207,12 @@ public class Compresor
         }
     }
 
-    
     public void descomprimir(String fileName)
     {
         try
         {
+            // setDescomprimido(false);
+            
             int pos = fileName.indexOf(".");
             if(pos == -1) { throw new Exception ("El archivo no parece un archivo comprimido..."); }
             
@@ -322,6 +332,8 @@ public class Compresor
             }
             nuevo.close();
             comprimido.close();
+            
+            // setDescomprimido(true);
         }
         
         catch(IOException e)
@@ -334,5 +346,26 @@ public class Compresor
             System.out.println("Error inesperado: " + e.getMessage());
         }
     }
+    
+    public void setComprimido(boolean ter)
+    {
+        termino = ter;
+    }
+    
+    public boolean getComprimido()
+    {
+        return termino;
+    }        
+            
+    public void setDescomprimido(boolean ter)
+    {
+        termino = ter;
+    }
+    
+    public boolean getDescomprimido()
+    {
+        return termino;
+    }        
+    
 }
 
