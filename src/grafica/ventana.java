@@ -161,9 +161,19 @@ public class Ventana extends javax.swing.JFrame
         mnuOpDescompresion.setText("Descompresión");
 
         mnuArchDescomprimir.setText("Seleccionar archivo...");
+        mnuArchDescomprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuArchDescomprimirActionPerformed(evt);
+            }
+        });
         mnuOpDescompresion.add(mnuArchDescomprimir);
 
         mnuDescomprimir.setText("Descomprimir");
+        mnuDescomprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuDescomprimirActionPerformed(evt);
+            }
+        });
         mnuOpDescompresion.add(mnuDescomprimir);
 
         mnuMenu.add(mnuOpDescompresion);
@@ -175,14 +185,7 @@ public class Ventana extends javax.swing.JFrame
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDescomprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescomprimirActionPerformed
-        if(txtRutaDescomprimir.getText().trim().length() == 0 )
-        {
-            JOptionPane.showMessageDialog(this, "Seleccione antes un archivo para descomprimir", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        else 
-        {
-            comp.descomprimir(txtRutaDescomprimir.getText());
-        }
+        chequearDescomprimir();
         limpiar();
 }//GEN-LAST:event_btnDescomprimirActionPerformed
 
@@ -201,26 +204,12 @@ public class Ventana extends javax.swing.JFrame
     }//GEN-LAST:event_salirActionPerformed
 
     private void mnuComprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuComprimirActionPerformed
-        if(txtRutaComprimir.getText().trim().length() == 0 )
-        {
-            JOptionPane.showMessageDialog(this, "Seleccione antes un archivo para comprimir", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        else
-        {
-            comp.comprimir(txtRutaComprimir.getText());
-        }
+        chequearComprimir();
         limpiar ();
 }//GEN-LAST:event_mnuComprimirActionPerformed
 
     private void btnComprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprimirActionPerformed
-        if(txtRutaComprimir.getText().trim().length() == 0 )
-        {
-            JOptionPane.showMessageDialog(this, "Seleccione antes un archivo para comprimir", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        else
-        {
-            comp.comprimir(txtRutaComprimir.getText());
-        }
+        chequearComprimir();
         limpiar();
 }//GEN-LAST:event_btnComprimirActionPerformed
 
@@ -232,11 +221,21 @@ public class Ventana extends javax.swing.JFrame
         limpiar();
         seleccionar("descomp"); 
 }//GEN-LAST:event_btnArchDescomprimirActionPerformed
+
+    private void mnuArchDescomprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArchDescomprimirActionPerformed
+        limpiar();
+        seleccionar("descomp");
+    }//GEN-LAST:event_mnuArchDescomprimirActionPerformed
+
+    private void mnuDescomprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuDescomprimirActionPerformed
+        chequearDescomprimir();
+        limpiar();
+    }//GEN-LAST:event_mnuDescomprimirActionPerformed
     
     /**
-      * Clase que selecciona el archivo a comprimir / descomprimir
-      * @author  Morales - RoldÃ¡n - Senn
-      * @version Mayo de 2008
+      * Clase que selecciona el archivo a comprimir o descomprimir
+      * @author  Morales, Gustavo - Roldán, Marco - Senn, Analía
+      * @version Junio de 2008
       */
     private void seleccionar(String opcion)
     {
@@ -258,9 +257,10 @@ public class Ventana extends javax.swing.JFrame
     }
     
     /**
-      * Clase para calcular el porcentaje de progreso en la codificaciÃ³n del archivo
-      * @author  Morales - RoldÃ¡n - Senn
-      * @version Mayo de 2008
+      * Clase para calcular el porcentaje de progreso en la tarea
+      * de compresión o descompresión
+      * @author  Morales, Gustavo - Roldán, Marco - Senn, Analía
+      * @version Junio de 2008
       */
     public void progreso(long actual, long tam)
     {
@@ -275,8 +275,8 @@ public class Ventana extends javax.swing.JFrame
     
     /**
       * Clase para setear los componentes a su estado inicial
-      * @author  Morales - RoldÃ¡n - Senn
-      * @version Mayo de 2008
+      * @author  Morales, Gustavo - Roldán, Marco - Senn, Analía
+      * @version Junio de 2008
       */
     private void limpiar ()
     {
@@ -286,6 +286,41 @@ public class Ventana extends javax.swing.JFrame
         // btnDescomprimir.setEnabled(false);
     }
     
+    /**
+      * Clase que llama al metodo comprimir, verificando previamente que el
+      * usuario haya seleccionado un archivo
+      * @author  Morales, Gustavo - Roldán, Marco - Senn, Analía
+      * @version Junio de 2008
+      */
+    public void chequearComprimir()
+    {
+        if(txtRutaComprimir.getText().trim().length() == 0 )
+        {
+            JOptionPane.showMessageDialog(this, "Seleccione antes un archivo para comprimir", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else
+        {
+            comp.comprimir(txtRutaComprimir.getText());
+        }
+    }
+    
+    /**
+      * Clase que llama al metodo descomprimir, verificando previamente que el
+      * usuario haya seleccionado un archivo
+      * @author  Morales, Gustavo - Roldán, Marco - Senn, Analía
+      * @version Junio de 2008
+      */
+    public void chequearDescomprimir()
+    {
+        if(txtRutaDescomprimir.getText().trim().length() == 0 )
+        {
+            JOptionPane.showMessageDialog(this, "Seleccione antes un archivo para descomprimir", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else 
+        {
+            comp.descomprimir(txtRutaDescomprimir.getText());
+        }
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnArchComprimir;
@@ -309,5 +344,4 @@ public class Ventana extends javax.swing.JFrame
     private javax.swing.JTextField txtRutaComprimir;
     private javax.swing.JTextField txtRutaDescomprimir;
     // End of variables declaration//GEN-END:variables
-    
 }
