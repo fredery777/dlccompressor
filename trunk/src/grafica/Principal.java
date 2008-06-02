@@ -9,7 +9,7 @@ public class Principal
 {
     public static void main(String[] args)
     {        
-        ventana ven = new ventana();
+        grafica.VentanaInicio ven = new grafica.VentanaInicio();
         ven.setVisible(true);
     }
 }

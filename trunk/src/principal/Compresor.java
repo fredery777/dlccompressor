@@ -1,12 +1,3 @@
-/*
- * Compresor.java
- *
- * Created on 5 de mayo de 2008, 11:10
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
-
 package principal;
 /**
  * Un compresor de archivos basado en un Arbol de Huffman.
@@ -16,6 +7,7 @@ package principal;
  */
 import java.io.*;
 import hilo.*;
+import javax.swing.JProgressBar; // probando barra
 
 public class Compresor // extends Thread
 {
@@ -26,6 +18,8 @@ public class Compresor // extends Thread
     private String errorCode;
     private int cantSignos;
     private boolean termino;
+    
+    private JProgressBar barra = new JProgressBar(); // probando barra
     
     //private EstadosHilo hilo = null;
 
