@@ -1,9 +1,10 @@
 package grafica;
 
 /**
- * Clase para testear propiedades de la clase File
- * @author  Ing. Valerio Frittelli
- * @version Marzo de 2008
+ * Interfaz gráfica para realizar la compresióny descompresión
+ * de archivos mediante el algoritmo de Huffman
+ * @author  Morales, Gustavo - Roldán, Marco - Senn, Analía
+ * @version Junio de 2008
  */
 import java.io.*;
 import javax.swing.*;
@@ -37,7 +38,7 @@ public class Ventana extends javax.swing.JFrame
         btnComprimir = new javax.swing.JButton();
         btnDetener = new javax.swing.JButton();
         txtRutaDescomprimir = new javax.swing.JTextField();
-        lblRutaDestino = new javax.swing.JLabel();
+        lblRutaDescomprimir = new javax.swing.JLabel();
         lblRutaComprimir = new javax.swing.JLabel();
         txtRutaComprimir = new javax.swing.JTextField();
         lblProgreso = new javax.swing.JLabel();
@@ -45,10 +46,12 @@ public class Ventana extends javax.swing.JFrame
         mnuMenu = new javax.swing.JMenuBar();
         mnuArchivo = new javax.swing.JMenu();
         salir = new javax.swing.JMenuItem();
-        mnuAcciones = new javax.swing.JMenu();
-        explorar = new javax.swing.JMenuItem();
-        codificar = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        mnuOpCompresion = new javax.swing.JMenu();
+        mnuArchComprimir = new javax.swing.JMenuItem();
+        mnuComprimir = new javax.swing.JMenuItem();
+        mnuOpDescompresion = new javax.swing.JMenu();
+        mnuArchDescomprimir = new javax.swing.JMenuItem();
+        mnuDescomprimir = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Uso de la clase File");
@@ -98,11 +101,11 @@ public class Ventana extends javax.swing.JFrame
         getContentPane().add(txtRutaDescomprimir);
         txtRutaDescomprimir.setBounds(10, 160, 290, 20);
 
-        lblRutaDestino.setText("Ruta de destino:");
-        getContentPane().add(lblRutaDestino);
-        lblRutaDestino.setBounds(10, 140, 290, 20);
+        lblRutaDescomprimir.setText("Archivo a descomprimir:");
+        getContentPane().add(lblRutaDescomprimir);
+        lblRutaDescomprimir.setBounds(10, 140, 290, 20);
 
-        lblRutaComprimir.setText("Ruta de origen:");
+        lblRutaComprimir.setText("Archivo a comprimir:");
         getContentPane().add(lblRutaComprimir);
         lblRutaComprimir.setBounds(10, 40, 290, 20);
 
@@ -135,28 +138,35 @@ public class Ventana extends javax.swing.JFrame
 
         mnuMenu.add(mnuArchivo);
 
-        mnuAcciones.setText("Acciones");
+        mnuOpCompresion.setText("Compresión");
 
-        explorar.setText("Abrir...");
-        explorar.addActionListener(new java.awt.event.ActionListener() {
+        mnuArchComprimir.setText("Seleccionar archivo...");
+        mnuArchComprimir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                explorarActionPerformed(evt);
+                mnuArchComprimirActionPerformed(evt);
             }
         });
-        mnuAcciones.add(explorar);
+        mnuOpCompresion.add(mnuArchComprimir);
 
-        codificar.setText("Comprimir");
-        codificar.addActionListener(new java.awt.event.ActionListener() {
+        mnuComprimir.setText("Comprimir");
+        mnuComprimir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                codificarActionPerformed(evt);
+                mnuComprimirActionPerformed(evt);
             }
         });
-        mnuAcciones.add(codificar);
+        mnuOpCompresion.add(mnuComprimir);
 
-        jMenuItem1.setText("Descomprimir");
-        mnuAcciones.add(jMenuItem1);
+        mnuMenu.add(mnuOpCompresion);
 
-        mnuMenu.add(mnuAcciones);
+        mnuOpDescompresion.setText("Descompresión");
+
+        mnuArchDescomprimir.setText("Seleccionar archivo...");
+        mnuOpDescompresion.add(mnuArchDescomprimir);
+
+        mnuDescomprimir.setText("Descomprimir");
+        mnuOpDescompresion.add(mnuDescomprimir);
+
+        mnuMenu.add(mnuOpDescompresion);
 
         setJMenuBar(mnuMenu);
 
@@ -176,10 +186,10 @@ public class Ventana extends javax.swing.JFrame
         limpiar();
 }//GEN-LAST:event_btnDescomprimirActionPerformed
 
-    private void explorarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_explorarActionPerformed
+    private void mnuArchComprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuArchComprimirActionPerformed
         limpiar();
-       
-    }//GEN-LAST:event_explorarActionPerformed
+        seleccionar("comp");
+}//GEN-LAST:event_mnuArchComprimirActionPerformed
 
     private void btnArchComprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArchComprimirActionPerformed
         limpiar();
@@ -190,9 +200,17 @@ public class Ventana extends javax.swing.JFrame
         System.exit(0);
     }//GEN-LAST:event_salirActionPerformed
 
-    private void codificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codificarActionPerformed
+    private void mnuComprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuComprimirActionPerformed
+        if(txtRutaComprimir.getText().trim().length() == 0 )
+        {
+            JOptionPane.showMessageDialog(this, "Seleccione antes un archivo para comprimir", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else
+        {
+            comp.comprimir(txtRutaComprimir.getText());
+        }
         limpiar ();
-    }//GEN-LAST:event_codificarActionPerformed
+}//GEN-LAST:event_mnuComprimirActionPerformed
 
     private void btnComprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprimirActionPerformed
         if(txtRutaComprimir.getText().trim().length() == 0 )
@@ -275,16 +293,18 @@ public class Ventana extends javax.swing.JFrame
     private javax.swing.JButton btnComprimir;
     private javax.swing.JButton btnDescomprimir;
     private javax.swing.JButton btnDetener;
-    private javax.swing.JMenuItem codificar;
-    private javax.swing.JMenuItem explorar;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JProgressBar jpbProgreso;
     private javax.swing.JLabel lblProgreso;
     private javax.swing.JLabel lblRutaComprimir;
-    private javax.swing.JLabel lblRutaDestino;
-    private javax.swing.JMenu mnuAcciones;
+    private javax.swing.JLabel lblRutaDescomprimir;
+    private javax.swing.JMenuItem mnuArchComprimir;
+    private javax.swing.JMenuItem mnuArchDescomprimir;
     private javax.swing.JMenu mnuArchivo;
+    private javax.swing.JMenuItem mnuComprimir;
+    private javax.swing.JMenuItem mnuDescomprimir;
     private javax.swing.JMenuBar mnuMenu;
+    private javax.swing.JMenu mnuOpCompresion;
+    private javax.swing.JMenu mnuOpDescompresion;
     private javax.swing.JMenuItem salir;
     private javax.swing.JTextField txtRutaComprimir;
     private javax.swing.JTextField txtRutaDescomprimir;
