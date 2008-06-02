@@ -51,11 +51,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Seleccionar archivo..."/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuArchDescomprimirActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnuDescomprimir">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Descomprimir"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuDescomprimirActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
