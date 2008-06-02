@@ -19,28 +19,40 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="mnuAcciones">
+        <Menu class="javax.swing.JMenu" name="mnuOpCompresion">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Acciones"/>
+            <Property name="text" type="java.lang.String" value="Compresi&#xf3;n"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="explorar">
+            <MenuItem class="javax.swing.JMenuItem" name="mnuArchComprimir">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Abrir..."/>
+                <Property name="text" type="java.lang.String" value="Seleccionar archivo..."/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="explorarActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuArchComprimirActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="codificar">
+            <MenuItem class="javax.swing.JMenuItem" name="mnuComprimir">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Comprimir"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="codificarActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuComprimirActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="mnuOpDescompresion">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Descompresi&#xf3;n"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="mnuArchDescomprimir">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Seleccionar archivo..."/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnuDescomprimir">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Descomprimir"/>
               </Properties>
@@ -149,9 +161,9 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblRutaDestino">
+    <Component class="javax.swing.JLabel" name="lblRutaDescomprimir">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ruta de destino:"/>
+        <Property name="text" type="java.lang.String" value="Archivo a descomprimir:"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -161,7 +173,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblRutaComprimir">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ruta de origen:"/>
+        <Property name="text" type="java.lang.String" value="Archivo a comprimir:"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

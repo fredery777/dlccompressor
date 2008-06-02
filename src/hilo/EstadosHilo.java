@@ -1,13 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package hilo;
 
 /**
- *
- * @author Administrador
+ * Clase que defne los estados del hilo que maneja la compresión y
+ * descompresión de archivos
+ * @author  Morales, Gustavo - Roldán, Marco - Senn, Analía
+ * @version Junio de 2008
  */
 public class EstadosHilo extends Thread //implements Runneable
 {
