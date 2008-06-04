@@ -179,12 +179,12 @@ public class Compresor
                         mascara = 0x0080;
                         salida  = 0x0000;
                     }
-                    if(estadoHilo.isTerminado())
+                    /*if(estadoHilo.isTerminado())
                     {
                         comprimido.close();
                         fuente.close();
                         return fileName;
-                    }
+                    }*/
                 }
                 
                 // El hilo sigue vivo?
