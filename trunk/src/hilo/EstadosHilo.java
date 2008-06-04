@@ -11,7 +11,8 @@ import principal.*;
 public class EstadosHilo implements Runnable
 {
     private Compresor compresor = null;
-    private String origen = null;
+    private String archivo = null;
+    private String accion = null;
     private boolean termino = false;
     
     public EstadosHilo()
@@ -22,12 +23,14 @@ public class EstadosHilo implements Runnable
     public void run()
     {
         termino = false;
-        compresor.comprimir(origen);
+        if(accion.compareTo("comp")==0) compresor.comprimir(archivo);
+        else compresor.descomprimir(archivo);
     }
     
-    public void setArchivo(String arch)
+    public void setArchivo(String arch, String acc)
     {
-        origen = arch;
+        archivo = arch;
+        accion = acc;
     }
     
     public boolean isTerminado()

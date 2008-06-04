@@ -305,7 +305,7 @@ public class VentanaInicio extends javax.swing.JFrame
         }
         else
         {
-            ejecutar(txtRutaComprimir.getText(),"comp");
+            ejecutar(txtRutaComprimir.getText(), "comp");
         }
     }
     
