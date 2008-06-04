@@ -2,6 +2,7 @@ package hilo;
 
 import java.io.*;
 import principal.*;
+
 /**
  * Clase que maneja el hilo que lanza la compresión o descompresión de archivos
  * @author  Morales, Gustavo - Roldán, Marco - Senn, Analía
@@ -10,14 +11,11 @@ import principal.*;
 public class HiloCompresor
 {
     private EstadosHilo estadosHilo = null;
-    //private HiloGestor hiloGestor = null;
     private Thread hilo = null;
     
     public HiloCompresor()
     {
-        // hiloGestor = new HiloGestor();
         estadosHilo = new EstadosHilo();
-        //hilo = new Thread(hiloGestor);
         hilo = new Thread(estadosHilo);
     }
     
@@ -26,9 +24,7 @@ public class HiloCompresor
         if(!hilo.isAlive())
         {
             System.out.println("Procesando archivos...");
-            //hiloGestor.setArchivo(origen);
-            estadosHilo.setArchivo(archivo);
-            //hilo = new Thread(hiloGestor);
+            estadosHilo.setArchivo(archivo, accion);
             hilo = new Thread(estadosHilo);
             hilo.start();
         }
@@ -45,7 +41,6 @@ public class HiloCompresor
     
     public void Terminar()
     {
-        //hiloGestor.Terminar();
         estadosHilo.setTerminado();
     }
 }
