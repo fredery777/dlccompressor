@@ -10,8 +10,6 @@ public class EstadosHilo extends Thread implements Runnable
 {
     private boolean termino = false;
     
-    // saque el run
-    
     public boolean isTerminado()
     {
         return this.termino;

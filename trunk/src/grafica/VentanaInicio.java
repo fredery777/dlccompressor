@@ -17,7 +17,7 @@ public class VentanaInicio extends javax.swing.JFrame
     private File f;
     private int porcentaje;
     private int pCompletado;
-    private boolean terminar = false;
+    private boolean terminar;
     // private hilo.Compresor compresor = new hilo.Compresor();
     private HiloCompresor hiloCompresor = null;
     

@@ -1,6 +1,7 @@
 package hilo;
 
 import java.io.*;
+import principal.*;
 
 /**
  * Clase que maneja los procesos de compresión y descompresión de archivos
@@ -15,12 +16,12 @@ public class HiloGestor implements Runnable
     
     public HiloGestor()
     {
-        this.compresor = new Compresor();
+        compresor = new Compresor();
     }
     
-    public void setOrigen(String origen)
+    public void setOrigen(String orig)
     {
-        this.origen = origen;
+        origen = orig;
     }
     
     public boolean isTerminado()

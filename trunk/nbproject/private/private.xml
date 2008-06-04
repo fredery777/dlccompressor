@@ -3,10 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
         <file>file:/C:/Documents%20and%20Settings/Administrador/Escritorio/DLC/src/grafica/Principal.java</file>
+        <file>file:/C:/Documents%20and%20Settings/Administrador/Escritorio/DLC/src/grafica/VentanaInicio.java</file>
         <file>file:/C:/Documents%20and%20Settings/Administrador/Escritorio/DLC/src/hilo/Compresor.java</file>
-        <file>file:/C:/Documents%20and%20Settings/Administrador/Escritorio/DLC/src/hilo/Empaquetador.java</file>
-        <file>file:/C:/Documents%20and%20Settings/Administrador/Escritorio/DLC/src/hilo/EstadosHilo.java</file>
         <file>file:/C:/Documents%20and%20Settings/Administrador/Escritorio/DLC/src/hilo/HiloCompresor.java</file>
         <file>file:/C:/Documents%20and%20Settings/Administrador/Escritorio/DLC/src/hilo/HiloGestor.java</file>
+        <file>file:/C:/Documents%20and%20Settings/Administrador/Escritorio/DLC/src/principal/ArbolHuffman.java</file>
+        <file>file:/C:/Documents%20and%20Settings/Administrador/Escritorio/DLC/src/principal/CodigoHuffman.java</file>
+        <file>file:/C:/Documents%20and%20Settings/Administrador/Escritorio/DLC/src/principal/CompresorValerio.java</file>
+        <file>file:/C:/Documents%20and%20Settings/Administrador/Escritorio/DLC/src/principal/Consola.java</file>
+        <file>file:/C:/Documents%20and%20Settings/Administrador/Escritorio/DLC/src/principal/Frecuencia.java</file>
+        <file>file:/C:/Documents%20and%20Settings/Administrador/Escritorio/DLC/src/principal/Nodo.java</file>
+        <file>file:/C:/Documents%20and%20Settings/Administrador/Escritorio/DLC/src/principal/NodoHuffman.java</file>
+        <file>file:/C:/Documents%20and%20Settings/Administrador/Escritorio/DLC/src/principal/Principal.java</file>
     </open-files>
 </project-private>
