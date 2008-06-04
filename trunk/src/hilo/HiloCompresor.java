@@ -1,5 +1,7 @@
 package hilo;
 
+import java.io.*;
+import principal.*;
 /**
  * Clase que maneja el hilo que lanza la compresión o descompresión de archivos
  * @author  Morales, Gustavo - Roldán, Marco - Senn, Analía
@@ -12,8 +14,8 @@ public class HiloCompresor
     
     public HiloCompresor()
     {
-        this.hiloGestor = new HiloGestor();
-        this.hilo = new Thread(hiloGestor);
+        hiloGestor = new HiloGestor();
+        hilo = new Thread(hiloGestor);
     }
     
     public void ejecutar(String origen, String accion)

@@ -18,7 +18,6 @@ public class VentanaInicio extends javax.swing.JFrame
     private int porcentaje;
     private int pCompletado;
     private boolean terminar;
-    // private hilo.Compresor compresor = new hilo.Compresor();
     private HiloCompresor hiloCompresor = null;
     
     /** Creates new form VentanaInicial */
@@ -235,7 +234,7 @@ public class VentanaInicio extends javax.swing.JFrame
 
     private void btnDetenerActionPerformed(java.awt.event.ActionEvent evt)
     {//GEN-FIRST:event_btnDetenerActionPerformed
-        // terminar();
+        terminar();
     }//GEN-LAST:event_btnDetenerActionPerformed
 
     private void salirActionPerformed(java.awt.event.ActionEvent evt) 
@@ -306,6 +305,7 @@ public class VentanaInicio extends javax.swing.JFrame
         else
         {
             ejecutar(txtRutaComprimir.getText(),"comp");
+            
         }
     }
     
@@ -328,7 +328,6 @@ public class VentanaInicio extends javax.swing.JFrame
     public void ejecutar(String archivo, String accion)
     {
         terminar = false;
-        System.out.println("Ejecutar de la ventana...");
         hiloCompresor.ejecutar(archivo, accion);
     }
     
