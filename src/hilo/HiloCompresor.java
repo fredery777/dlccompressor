@@ -9,22 +9,27 @@ import principal.*;
  */
 public class HiloCompresor
 {
-    private HiloGestor hiloGestor = null;
+    private EstadosHilo estadosHilo = null;
+    //private HiloGestor hiloGestor = null;
     private Thread hilo = null;
     
     public HiloCompresor()
     {
-        hiloGestor = new HiloGestor();
-        hilo = new Thread(hiloGestor);
+        // hiloGestor = new HiloGestor();
+        estadosHilo = new EstadosHilo();
+        //hilo = new Thread(hiloGestor);
+        hilo = new Thread(estadosHilo);
     }
     
-    public void ejecutar(String origen, String accion)
+    public void ejecutar(String archivo, String accion)
     {
         if(!hilo.isAlive())
         {
             System.out.println("Procesando archivos...");
-            hiloGestor.setOrigen(origen);
-            hilo = new Thread(hiloGestor);
+            //hiloGestor.setArchivo(origen);
+            estadosHilo.setArchivo(archivo);
+            //hilo = new Thread(hiloGestor);
+            hilo = new Thread(estadosHilo);
             hilo.start();
         }
         else
@@ -40,6 +45,7 @@ public class HiloCompresor
     
     public void Terminar()
     {
-        hiloGestor.Terminar();
+        //hiloGestor.Terminar();
+        estadosHilo.setTerminado();
     }
 }
