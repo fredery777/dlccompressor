@@ -150,7 +150,7 @@ public class Compresor
             // comienza fase de compresión (por fin...)
             short mascara = 0x0080;  // el valor 0000 0000 1000 0000
             short salida  = 0x0000;  // el valor 0000 0000 0000 0000
-            int bit = 0;             // en qu' bit vamos?           
+            int bit = 0;             // en qué bit vamos?           
             
             fuente.seek(0);   // vuelvo el fp al principio
             while(fuente.getFilePointer() < fuente.length())
@@ -178,6 +178,12 @@ public class Compresor
                         bit = 0;
                         mascara = 0x0080;
                         salida  = 0x0000;
+                    }
+                    if(estadoHilo.isTerminado())
+                    {
+                        comprimido.close();
+                        fuente.close();
+                        return fileName;
                     }
                 }
                 
@@ -251,7 +257,7 @@ public class Compresor
                     return fileName;
                 }
             
-            // y ahora, recupero todos los datos que el compresor dej' adelante...
+            // y ahora, recupero todos los datos que el compresor deja adelante...
             
             // ... empezando por el tamaño del archivo original...
             long tArch = comprimido.readLong();
