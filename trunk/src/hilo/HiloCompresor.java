@@ -9,19 +9,19 @@ import java.io.*; //File
  */
 public class HiloCompresor
 {
-    private GestorCompresor g = null;
+    private HiloGestor g = null;
     
     private Thread t = null;
     
     public HiloCompresor()
     {
-        g = new GestorCompresor(this);
+        g = new HiloGestor(this);
         t = new Thread(g);
     }
     
-    public HiloCompresor(GestorMensajes gm)
+    public HiloCompresor()
     {
-        g = new GestorCompresor(this);
+        g = new HiloGestor(this);
         t = new Thread(g);
     }
     

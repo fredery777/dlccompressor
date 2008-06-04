@@ -1,6 +1,7 @@
 package hilo;
 
 import java.io.*;
+import principal.*;
 
 /**
  *
@@ -37,7 +38,7 @@ public class Compresor
             
             // abro los archivos
             //File f1 = new File(fileName);
-            File f2Comprimido = new File(nombre + Comp.ext);
+            File f2Comprimido = new File(nombre + Compresor.ext);
             
             RandomAccessFile fuente = new RandomAccessFile (fileName, "r");
             //esta mas abajo repetido// RandomAccessFile comprimido = new RandomAccessFile (f2Comprimido, "rw");
@@ -65,7 +66,7 @@ public class Compresor
             }
             
             //pregunta si debe seguir o cortar
-            if(hilo.isMorir() == true)//if(this.morir == true)
+            if(hilo.isTerminado() == true)
             {return null;}
             
             // creamos el Arbol con lugar para esa cantidad de signos
@@ -86,7 +87,7 @@ public class Compresor
             ht.codificar();
             
             //pregunta si debe seguir o cortar
-            if(hilo.isMorir() == true)
+            if(hilo.isTerminado()) // verifico si devuelve TRUE
             {
                 fuente.close();
                 fuente = null;
@@ -130,7 +131,7 @@ public class Compresor
             }
             
             //pregunta si debe seguir o cortar
-            if(hilo.isMorir() == true)
+            if(hilo.isTerminado())
             {
                 comprimido.close();
                 comprimido = null;
@@ -139,8 +140,7 @@ public class Compresor
                 return null;
             }
             
-            
-            // comienza fase de compresi'n (por fin...)
+            // comienza fase de compresión (por fin...)
             short mascara = 0x0080;  // el valor 0000 0000 1000 0000
             short salida  = 0x0000;  // el valor 0000 0000 0000 0000
             int bit = 0;             // en qu' bit vamos?           
@@ -166,7 +166,7 @@ public class Compresor
                     bit++;
                     if (bit == 8)
                     {
-                        //se llen' el byte de salida...
+                        //se llena el byte de salida...
                         comprimido.writeByte( (byte)salida ); // graba el menos significativo!!! 
                         bit = 0;
                         mascara = 0x0080;
@@ -175,7 +175,7 @@ public class Compresor
                 }
                 
                 //pregunta si debe seguir o cortar
-                if(hilo.isMorir() == true)
+                if(hilo.isTerminado())
                 {
                     comprimido.close();
                     comprimido = null;
@@ -183,7 +183,7 @@ public class Compresor
                     fuente = null;
                     return null;
                 }
-            }//while
+            } // Fin del while...
 
             if (bit != 0) 
             {
@@ -201,14 +201,11 @@ public class Compresor
         catch(IOException e)
         {
             System.out.println("Error de IO: " + e.getMessage());
-            GestorMensajes.getEx().EnviarMensaje("Error de IO: ", e);
         }
         catch(Exception e)
         {
             System.out.println("Error inesperado: " + e.getMessage());
-            GestorMensajes.getEx().EnviarMensaje("Error inesperado: ", e);
         }
-        
         return null;
     }
 
@@ -247,7 +244,7 @@ public class Compresor
             nuevo.setLength(0);
             
             //pregunta si debe seguir o cortar
-               if(hilo.isMorir() == true)
+               if(hilo.isTerminado() == true)
                 {
                     comprimido.close();
                     comprimido = null;
@@ -303,7 +300,7 @@ public class Compresor
             long cantBytes = 0;            // cu'ntos bytes llevo grabados??
             
             //pregunta si debe seguir o cortar
-            if(hilo.isMorir() == true)
+            if(hilo.isTerminado())
                 {
                     comprimido.close();
                     comprimido = null;
