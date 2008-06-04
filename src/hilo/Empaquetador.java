@@ -79,8 +79,8 @@ public class Empaquetador
         {
             if(aux.charAt(i) == '\\')
             {
-                if(b == true)//si antes vino un '.' punto entonses me han pasado un archivo
-                { aux = aux.substring(0, i); }
+                //si antes vino un '.' punto entonses me han pasado un archivo
+                if(b == true) aux = aux.substring(0, i);
                 break;
             }
             if(aux.charAt(i) == '.')
@@ -92,54 +92,52 @@ public class Empaquetador
     /**
      * Toma la direcci'on de un directorio o archivo y genera un archivo con todos los
      * archivos que tenga dentro.
-     *  Retorna le archivo empaquetado
+     * Retorna le archivo empaquetado
      */
     public File Empaquetar(File dire)
     {
         if(dire.isDirectory() || dire.isFile())
         {
             //pregunta si debe seguir o cortar
-            if(hilo.isMorir() == true)//if(this.morir == true)
-            { return null; }
+            if(hilo.isTerminado()) return null;
             
             File f = null;
             RandomAccessFile aux = null;
-            try{
-                //f = File.createTempFile("gtemp", null);
-                f = File.createTempFile("gtemp", null, dire.getParentFile());
-                //f = new File(dire.getAbsolutePath()+"G\\holas.txt");
-                //crearDirectorios(f);
+            try
+            {
+                f = File.createTempFile("temp", null, dire.getParentFile());
                 f.deleteOnExit();
                 aux = new RandomAccessFile(f, "rw");
             }
-            catch(IOException io)
+            catch(IOException e)
             {
-                GestorMensajes.getEx().EnviarMensaje("Empaquetar: Error al crear el archivo temporal ", io);
+                System.out.println("Empaquetar: Error al crear el archivo temporal " + e.getMessage());
                 return null;
             }
             
             File fileBase = dire;
-            if(dire.isFile())
-            { fileBase = dire.getParentFile(); }
+            if(dire.isFile()) fileBase = dire.getParentFile();
             int b = 0;
-            try{
+            try
+            {
                 b = addFile(aux, dire, fileBase);//fileBase es un directorio
             }
-            catch(Exception ex)
+            catch(Exception e)
             {
-                GestorMensajes.getEx().EnviarMensaje("Exception inesperada: Llamada a addFile: ", ex);
+                System.out.println("Exception inesperada" + e.getMessage());
                 return null;
             }
-            try {
+            try 
+            {
                 aux.close();
-            } catch (Exception exception) {}
-            
-            if(b > 0)
-            { return f; }
-            else
-            { return null; }
+            }
+            catch (Exception e)
+            {
+                System.out.println("Error al cerrar el archivo" + e.getMessage());
+            }
+            if(b > 0) return f;
+            else return null;
         }
-        
         return null;
     }
     
@@ -149,13 +147,8 @@ public class Empaquetador
      * phat name
      * contenido
      */
-    private int addFile(RandomAccessFile aux, File dire, File fileBase)
+    private int addFile(RandomAccessFile aux, File dire, File fileBase) // int antes
     {
-        //pregunta si debe seguir o cortar
-            if(hilo.isMorir() == true)//if(this.morir == true)
-            { return Info.CancelInt; }
-        
-        int info = 0;
         if(dire != null && dire.isDirectory())
         {
             File[] v = dire.listFiles();
@@ -166,34 +159,33 @@ public class Empaquetador
                 
                 for(int i = 0, rdInd = 0; i < v.length; i++)
                 {
-                    try{
+                    try
+                    {
                         if(v[i].isFile())
                         {
                             long inicio = aux.length();
-                            aux.seek(inicio + 8);//#$ salta el espacio de un long reservado para el fin del tamaño
-                            //otra opci'on es escrivir un long
-                            //aux.seek(inicio);
-                            //aux.writeLong(0);
+                            aux.seek(inicio + 8); // salta el espacio de un long reservado para el fin del tamaño
                             
-                            //ahora gravo la dirección relativa a dire
+                            //ahora grabo la dirección relativa a dire
                             String a = "";
                             //a = v[i].getAbsolutePath().replaceFirst(fileBase.getAbsolutePath(), "");
                             a = v[i].getAbsolutePath();
                             a = a.substring(fileBase.getAbsolutePath().length());
                             
-                            aux.writeBytes(a + '\r' + '\n');//a + fin de l'inea
+                            aux.writeBytes(a + '\r' + '\n'); //a + fin de l'inea
                             
                             //grabo el contenido del archivo
                             RandomAccessFile rr = new RandomAccessFile(v[i], "rw");
                             
-                            try{
+                            try
+                            {
                                 rr.seek(0);
-                                while(true)
-                                {
-                                    aux.writeByte(rr.readByte());
-                                }
-                            }catch(EOFException eof)
-                            {}//fin del archivo
+                                while(true) aux.writeByte(rr.readByte());
+                            }
+                            catch(EOFException e)
+                            {
+                                System.out.println("Error: " + e.getMessage());
+                            }//fin del archivo
                             
                             
                             //vuelvo al inicio y grabo donde termina el archivo
@@ -202,10 +194,14 @@ public class Empaquetador
                             aux.writeLong(fin);
                             aux.seek(fin);
                             
-                            try{
-                            rr.close();
-                            }catch(IOException ioex){}
-                            
+                            try
+                            {
+                                rr.close();
+                            }
+                            catch(IOException e)
+                            {
+                                System.out.println("Error: " + e.getMessage());
+                            }
                         }
                         else
                         {
@@ -216,53 +212,29 @@ public class Empaquetador
                             }
                         }
                     }
-                    catch(IOException io)
+                    catch(IOException e)
                     {
-                        GestorMensajes.getEx().EnviarMensaje("addFile: Error dentro del ciclo for: ", io);
+                        System.out.println("Error en el ciclo FOR : " + e.getMessage());
                     }
                     
                     //pregunta si debe seguir o cortar
-                    if(hilo.isMorir() == true)//if(this.morir == true)
-                    { return Info.CancelInt; }
-                }//for
-                
+                    // if(hilo.isTerminado()) return Info.CancelInt; // lo mismo de arriba
+                } 
                 v = null;
                 //llamo recurcivamente para el tratamiento de los directorios
-                for(int i = 0; i < restantesDires.length; i++)
-                {
-                    //pregunta si debe seguir o cortar
-                    if(hilo.isMorir() == true)//if(this.morir == true)
-                    { return Info.CancelInt; }
-                    
-                    if(restantesDires[i] != null)
-                    {
-                        //llamada recurciva
-                        info = addFile(aux, restantesDires[i], fileBase);
-                        if(info <= 0)
-                        {
-                            GestorMensajes.getEx().EnviarMensaje("addFile: Error : " + info);
-                            return info;
-                        }
-                    }
-                }
             }
-            
-            info = Info.OKCreadoInt;
-        }//if(dire.isDirectory())
+        } // if(dire.isDirectory())
         else
         {
             if(dire != null && dire.isFile())
             {
-                try{
+                try
+                {
                     long inicio = aux.length();
                     aux.seek(inicio + 8);//#$ salta el espacio de un long reservado para el fin del tamaño
-                    //otra opci'on es escrivir un long
-                    //aux.seek(inicio);
-                    //aux.writeLong(0);
                     
                     //ahora gravo la dirección relativa a dire
                     String a = "";
-                    //a = dire.getAbsolutePath().replaceFirst(fileBase.getAbsolutePath(), "");
                     a = dire.getAbsolutePath();
                     a = a.substring(fileBase.getAbsolutePath().length());
                     
@@ -271,35 +243,38 @@ public class Empaquetador
                     //grabo el contenido del archivo
                     RandomAccessFile rr = new RandomAccessFile(dire, "rw");
                     
-                    try{
+                    try
+                    {
                         rr.seek(0);
-                        while(true)
-                        {
-                            aux.writeByte(rr.readByte());
-                        }
-                    }catch(EOFException eof)
-                    {}//fin del archivo
+                        while(true) aux.writeByte(rr.readByte());
+                    }
+                    catch(EOFException e)
+                    {
+                        System.out.println("Error: " + e.getMessage());
+                    }
                     
-                    //vuelvo al inicio y grabo donde termina el archivo
+                    // vuelvo al inicio y grabo donde termina el archivo
                     long fin = aux.getFilePointer();
                     aux.seek(inicio);
                     aux.writeLong(fin);
                     aux.seek(fin);
                     
-                    try{
-                    rr.close();
-                    }catch(IOException ioex){}
-                    info = Info.OKCreadoInt;
+                    try
+                    {
+                        rr.close();
+                    }
+                    catch(IOException e)
+                    {
+                        System.out.println("Error: " + e.getMessage());
+                    }
                 }
-                catch(IOException io)
+                catch(IOException e)
                 {
-                    GestorMensajes.getEx().EnviarMensaje("addFile: Error al empaquetar un solo archivo: ", io);
-                    return Info.ERRORInt;
+                    System.out.println("Error: " + e.getMessage());
                 }
             }//if(dire != null && dire.isFile())
-            
         }
-        return info;
+        return 1;
     }
     
     /**
@@ -313,77 +288,84 @@ public class Empaquetador
     public int Desempaquetar(File paquete, File direBase)
     {
         //pregunta si debe seguir o cortar
-            if(hilo.isMorir() == true)//if(this.morir == true)
-            { return Info.CancelInt; }
+        // if(hilo.isTerminado()) return Info.CancelInt;
             
         if(paquete != null && paquete.isFile() && direBase != null)
         {
             direBase.mkdirs();//crea el 'arbol de directorios
             
             RandomAccessFile paq = null;
-            try{
+            try
+            {
                 paq = new RandomAccessFile(paquete, "rw");
             }
-            catch(IOException io)
+            catch(IOException e)
             {
-                GestorMensajes.getEx().EnviarMensaje("Desempaquetar: Error al crear un RandomAccessFile ", io);
-                return Info.ERRORInt;
+                System.out.println("Error: " + e.getMessage());
             }
             
-            while(true)//podria haber puesto (paq.getFilePointer() < paq.length())
+            while(true)
             {
-                try{
+                try
+                {
                     //EOFException por fin de archivo y termina el ciclo
                     long fin = paq.readLong();//lee donde termina el archivo
                     
                     File nombre = new File(direBase.getAbsolutePath() + paq.readLine());//arma el nombre
-                    //this.crearDirectorios(nombre);//crea el 'arbol de directorios
                     nombre.getParentFile().mkdirs();//sube un nivel y crea el 'arbol de directorios
                     
-                    try{
+                    try
+                    {
                         //creo el nuevo archivo
                         RandomAccessFile rr = new RandomAccessFile(nombre, "rw");
                         rr.setLength(0);//corto el archivo
                         
-                        while(paq.getFilePointer() < fin)
-                        {
-                            rr.writeByte(paq.readByte());
-                        }
+                        while(paq.getFilePointer() < fin) rr.writeByte(paq.readByte());
                         
                         rr.close();
                     }
-                    catch(IOException io2)
+                    catch(IOException e)
                     {
                         //error con el archivo pero intento con el resto
-                        paq.seek(fin);//me muevo al final del archivo empaquetado en paq
+                        paq.seek(fin);
+                        //me muevo al final del archivo empaquetado en paq
+                        System.out.println("Error: " + e.getMessage());
                     }
                     nombre = null;
                 }
-                catch(EOFException eof)
+                catch(EOFException e)
                 {
+                    System.out.println("Error: " + e.getMessage());
                     //fin del archivo paq
                     break;
                 }
-                catch(IOException io)
+                catch(IOException e)
                 {
-                    GestorMensajes.getEx().EnviarMensaje("Desempaquetar: Dentro del for ", io);
-                    try{
+                    System.out.println("Desempaquetar: Dentro del FOR " + e.getMessage());
+                    try
+                    {
                         paq.close();
-                    }catch(IOException ioex){}
-                    return Info.ERRORInt;
+                    }
+                    catch(IOException ee)
+                    {
+                        System.out.println("Error: " + ee.getMessage());
+                    }
                 }
                 
                 //pregunta si debe seguir o cortar
-                if(hilo.isMorir() == true)//if(this.morir == true)
-                { return Info.CancelInt; }
+                // if(hilo.isTerminado Morir() == true) return Info.CancelInt;
             }//while
             
-            try{
+            try
+            {
                 paq.close();
-            }catch(IOException ioex){}
-            return Info.OKCreadoInt;
+            }
+            catch(IOException e)
+            {
+                System.out.println("Error: " + e.getMessage());
+            }
         }
-        
-        return Info.ErrorNullInt;
+        return 1;
     }
+    
 }

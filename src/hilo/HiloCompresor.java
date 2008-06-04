@@ -1,6 +1,6 @@
 package hilo;
 
-import java.io.*; //File
+import java.io.*; 
 
 /**
  * Clase que maneja el hilo que lanza la compresión o descompresión de archivos
@@ -15,14 +15,8 @@ public class HiloCompresor
     
     public HiloCompresor()
     {
-        g = new HiloGestor(this);
-        t = new Thread(g);
-    }
-    
-    public HiloCompresor()
-    {
-        g = new HiloGestor(this);
-        t = new Thread(g);
+        this.g = new HiloGestor();
+        this.t = new Thread(g);
     }
     
     public void Ejecutar(String origen, String nuevoNombre, String destino, String D2)
@@ -48,14 +42,10 @@ public class HiloCompresor
     public void finEjecucion()
     {
         System.out.println("Fin de compresión!");
-        if(this.fe != null)
-        {
-            this.fe.finEjecucion(info);
-        }
     }
     
     public void Terminar()
     {
-        g.Morir();
+        g.Terminar();;
     }
 }

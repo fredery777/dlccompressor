@@ -9,9 +9,13 @@ public class Principal
 {
     public static void main(String[] args)
     {        
-        grafica.VentanaInicio ven = new grafica.VentanaInicio();
-        ven.setVisible(true);
+        java.awt.EventQueue.invokeLater(new Runnable()
+        {
+            public void run()
+            {
+                VentanaInicio ven = new grafica.VentanaInicio();
+                ven.setVisible(true);
+            }
+        });
     }
 }
-   
-
