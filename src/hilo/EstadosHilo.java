@@ -1,7 +1,7 @@
 package hilo;
 
 /**
- * Clase que defne los estados del hilo que maneja la compresión y
+ * Clase que define los estados del hilo que maneja la compresión y
  * descompresión de archivos
  * @author  Morales, Gustavo - Roldán, Marco - Senn, Analía
  * @version Junio de 2008
