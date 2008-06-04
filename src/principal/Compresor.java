@@ -1,65 +1,54 @@
 package principal;
+
+import hilo.*;
+import java.io.*;
+
 /**
  * Un compresor de archivos basado en un Arbol de Huffman.
- * 
- * @author Ing. Valerio Frittelli
- * @version Octubre de 2007
+ * @author Ing. Valerio Fritelli
+ * @author Morales, Gustavo - Roldán, Marco - Senn, Analía
+ * @version Junio de 2008
  */
-import java.io.*;
-import hilo.*;
-import javax.swing.JProgressBar; // probando barra
-
-public class Compresor // extends Thread
+public class Compresor
 {
     private ArbolHuffman ht;
     private RandomAccessFile fuente;
     private RandomAccessFile comprimido;
     private RandomAccessFile nuevo;
-    private String errorCode;
     private int cantSignos;
     private boolean termino;
     
-    private JProgressBar barra = new JProgressBar(); // probando barra
+    private EstadosHilo estadoHilo = null;
     
-    //private EstadosHilo hilo = null;
-
-    /**
-     *  Crea un compresor y lo prepara para recibir una tabla de n signos
-     */
     public Compresor()
     {
-       cantSignos = 0;
-       errorCode = "Compresor preparado";
+        estadoHilo = new EstadosHilo();
     }
-
-    /**
-     *  Devuelve el estado del compresor luego de una operación dada
-     *  @return un String con el estado del compresor
-     */
-    public String getErrorCorde() 
-    { 
-        return errorCode; 
+    
+    public Compresor(EstadosHilo eHilo)
+    {
+        estadoHilo = eHilo;
     }
-
+    
     /**
-     *  Comprime un archivo usando un Arbol de Huffman para determinar el código de bit de cada signo. Genera un 
-     *  archivo comprimido con el mismo nombre que el original, pero con extensión .cmp
-     *  @param fileName el nombre del archivo a comprimir
+     *  Comprime un archivo usando un Arbol de Huffman para determinar el codigo
+     *  de bit de cada signo. Genera un archivo comprimido con el mismo nombre
+     *  que el original, pero con extension ".huffman".
+     *  Retorna el archivo comprimido
+     *  @param fileName el archivo a comprimir
      */
-    public void comprimir (String fileName)
+    public String comprimir(String fileName)
     {
         try
         {  
-            //setComprimido(false);
-            
             //obtengo el nombre del archivo, sin la extensión
             String nombre = fileName.substring( 0, fileName.indexOf(".") );
             
             // abro los archivos
             File f1 = new File(fileName);
-            File f2 = new File(nombre + ".cmp");
+            File f2 = new File(nombre + ".huffman");
             
-            fuente     = new RandomAccessFile (f1, "r");
+            fuente = new RandomAccessFile (f1, "r");
             comprimido = new RandomAccessFile (f2, "rw");
             
             // cuento cuántas veces aparece cada byte en el archivo
@@ -83,11 +72,18 @@ public class Compresor // extends Thread
             { 
                 if( c[i] != 0 ) { cantSignos++; }
             }
-
+            
+            // El hilo sigue vivo?
+            if(estadoHilo.isTerminado())
+            {
+                fuente.close();
+                return fileName;
+            }
+            
             // creamos el Arbol con lugar para esa cantidad de signos
             ht = new ArbolHuffman(cantSignos); 
             
-            // inicializamos el arbol de Huffman con los signos y sus frecuencias
+            // inicializamos el árbol de Huffman con los signos y sus frecuencias
             int ind = 0;
             for(i = 0;  i < 256;  i++)
             {
@@ -100,22 +96,30 @@ public class Compresor // extends Thread
             
             // armamos el árbol y obtenenos el código Huffman de cada signo
             ht.codificar();
-
+            
+            // El hilo sigue vivo?
+            if(estadoHilo.isTerminado())
+            {
+                fuente.close();
+                return fileName;
+            }
+            
             // cantidad de bytes del archivo fuente
             long tArch = fuente.length();  
             
             // guardo en el archivo comprimido información para el descompresor...
             
-            // ...empiezo guardando el nombre y la extensión del original...
+            // ...empiezo guardando el nombre y la extensi'n del original...
+            //comprimido.setLength(0);
             comprimido.writeUTF(fileName);
             
             // ... luego guardo la longitud en bytes del archivo original...
             comprimido.writeLong(tArch);
             
-            // ... la cantidad de símbolos (o sea, la cantidad de hojas del árbol)...
+            // ... la cantidad de s'mbolos (o sea, la cantidad de hojas del 'rbol)...
             comprimido.writeInt(cantSignos);
             
-            // ... ahora la tabla de símbolos tal como está en el arbol...
+            // ... ahora la tabla de s'mbolos tal como est' en el arbol...
             for(i = 0; i < cantSignos; i++)
             {
                 byte signo = ht.getSigno(i);
@@ -125,14 +129,6 @@ public class Compresor // extends Thread
             // ... ahora el vector que representa al árbol...
             NodoHuffman a[] = ht.getArbol();
             int n = cantSignos * 2 - 1;  // cantidad total de nodos del árbol
-            //acá se inicializan todos los signos sin los valores de hijo izq hijo der, por q no tienen hijos, son hojas.
-            /*for(i = 0; i < cantSignos; i++)
-            {
-                // ...por cada nodo, guardar todos sus datos...
-                comprimido.writeInt( a[i].getFrecuencia() );
-                comprimido.writeInt( a[i].getPadre() );
-                comprimido.writeBoolean( a[i].isLeft() );
-            }*/
             for(i = 0; i < n; i++)
             {
                 // ...por cada nodo, guardar todos sus datos...
@@ -143,10 +139,18 @@ public class Compresor // extends Thread
                 comprimido.writeInt( a[i].getDerecho());
             }
             
+            // El hilo sigue vivo?
+            if(estadoHilo.isTerminado())
+            {
+                comprimido.close();
+                fuente.close();
+                return fileName;
+            }
+            
             // comienza fase de compresión (por fin...)
             short mascara = 0x0080;  // el valor 0000 0000 1000 0000
             short salida  = 0x0000;  // el valor 0000 0000 0000 0000
-            int bit = 0;             // en qué bit vamos?           
+            int bit = 0;             // en qu' bit vamos?           
             
             fuente.seek(0);   // vuelvo el fp al principio
             while(fuente.getFilePointer() < fuente.length())
@@ -169,12 +173,20 @@ public class Compresor // extends Thread
                     bit++;
                     if (bit == 8)
                     {
-                        //se llenó el byte de salida...
+                        //se llena el byte de salida...
                         comprimido.writeByte( (byte)salida ); // graba el menos significativo!!! 
                         bit = 0;
                         mascara = 0x0080;
                         salida  = 0x0000;
                     }
+                }
+                
+                // El hilo sigue vivo?
+                if(estadoHilo.isTerminado())
+                {
+                    comprimido.close();
+                    fuente.close();
+                    return fileName;
                 }
             }
 
@@ -186,61 +198,72 @@ public class Compresor // extends Thread
             comprimido.close();
             fuente.close();
             
-            //setComprimido(true);
-    
+            return nombre;
         }
-        
         catch(IOException e)
         {
-            System.out.println("Error de IO: " + e.getMessage());   
+            System.out.println("Error de IO: " + e.getMessage());
         }
-        
         catch(Exception e)
         {
             System.out.println("Error inesperado: " + e.getMessage());
         }
+        return null;
     }
 
-    public void descomprimir(String fileName)
+    
+    /**
+     *  Descomprime un archivo usando un Arbol de Huffman para determinar el
+     *  codigo de bit de cada signo. Genera el archivo original.
+     *  Retorna el archivo descomprimido
+     *  @param fileName el archivo a descomprimir
+     */
+    public String descomprimir(String fileName)
     {
         try
         {
-            // setDescomprimido(false);
-            
             int pos = fileName.indexOf(".");
-            if(pos == -1) { throw new Exception ("El archivo no parece un archivo comprimido..."); }
+            if(pos == -1) return "El archivo no parece un archivo comprimido...";
             
             String ext = fileName.substring( pos + 1 );
-            if( ext.compareTo("cmp") != 0 ) { throw new Exception ("El archivo no tiene la extensión cmp..."); }
+            //String auxext = fileName.substring(fileName.length()-4, fileName.length());
+            if( ext.compareTo("huffman") != 0 ) return "El archivo no parece un archivo comprimido...";
             
             // abro el archivo comprimido...
-            File f1 = new File( fileName );
+            File f1 = new File(fileName);
             comprimido = new RandomAccessFile(f1, "r");    
             
             // ... y recupero el nombre del archivo original
             String original = comprimido.readUTF();
             
-            System.out.println("Nombre del archivo: " + original);
-            
             // creo el archivo con el nombre del original
             File f2 = new File(original);
-            if( f2.exists() ) { f2.delete(); }
+            if(f2.exists())
+            { 
+                f2.delete();  // agregar código y preguntar si borrar o no
+            }
             nuevo = new RandomAccessFile(f2, "rw");
             
-            // y ahora, recupero todos los datos que el compresor dejó adelante...
+            // el hilo sigue vivo?
+               if(estadoHilo.isTerminado())
+                {
+                    comprimido.close();
+                    nuevo.close();
+                    return fileName;
+                }
+            
+            // y ahora, recupero todos los datos que el compresor dej' adelante...
             
             // ... empezando por el tamaño del archivo original...
             long tArch = comprimido.readLong();
             
-            System.out.println("Tamaño del archivo: " + tArch);
-            
             // ... la cantidad de signos de la tabla (o sea, la cantidad de hojas)...
             cantSignos = comprimido.readInt();
             
-            // ...creo de nuevo el árbol en memoria...
+            // ...creo de nuevo el 'rbol en memoria...
             ht = new ArbolHuffman(cantSignos);
             
-            // ... y recupero uno a uno los signos originales, guardándolos de nuevo en el árbol...
+            // ... y recupero uno a uno los signos originales, guardándolos de nuevo en el arbol...
             int i;
             for(i = 0; i < cantSignos; i++)
             {
@@ -249,26 +272,10 @@ public class Compresor // extends Thread
             }
             
             // ...ahora le toca al vector del árbol...
-            int n = cantSignos * 2 - 1;  // cantidad total de nodos del árbol
-            /*for(i = 0; i < cantSignos; i++)
-            {
-                // ...por cada nodo, recuperar todos sus datos y volver a armar el árbol...
-                
-                System.out.println("Hoja: " + i);
-                
-                int f  = comprimido.readInt();           // frecuencia
-                int padre = comprimido.readInt();        // padre
-                boolean left = comprimido.readBoolean(); // es izquierdo?
-                NodoHuffman nh = new NodoHuffman( f, padre, left );
-                ht.setNodo( nh, i );
-            }*/
-   
+            int n = cantSignos * 2 - 1;  // cantidad total de nodos del 'rbol
             for(i = 0; i < n; i++)
             {
-                // ...por cada nodo, recuperar todos sus datos y volver a armar el árbol...
-                
-                System.out.println("Padre: " + i);
-                
+                // ...por cada nodo, recuperar todos sus datos y volver a armar el 'rbol...
                 int f  = comprimido.readInt();           // frecuencia
                 int padre = comprimido.readInt();        // padre
                 boolean left = comprimido.readBoolean(); // es izquierdo?
@@ -283,13 +290,21 @@ public class Compresor // extends Thread
                        
             // de acá saco el vector que representa al árbol y el índice de la raiz...
             NodoHuffman []v2 = ht.getArbol();
-            int raiz =  v2.length - 1;  // la raiz está en la última casilla del vector!!!!
+            int raiz =  v2.length - 1;  // la raiz esta en la última casilla del vector!!!!
             
             // comienza la fase de descompresión
             short aux;                     // auxiliar para desenmascarar
             short mascara;
             int bit, nodo = raiz;          // comenzamos desde la raiz y vamos bajando
-            long cantBytes = 0;            // cuántos bytes llevo grabados??
+            long cantBytes = 0;            // cu'ntos bytes llevo grabados??
+            
+            // el hilo sigue vivo?
+            if(estadoHilo.isTerminado())
+            {
+                comprimido.close();
+                nuevo.close();
+                return fileName;
+            }
             
             // leo byte por byte el archivo comprimido
             while(comprimido.getFilePointer() < comprimido.length())
@@ -323,43 +338,32 @@ public class Compresor // extends Thread
                         nodo = raiz;
                     }
                 }
+                
+                // el hilo sigue vivo?
+                if(estadoHilo.isTerminado())
+                {
+                    comprimido.close();
+                    nuevo.close();
+                    return null;
+                }
             }
             nuevo.close();
             comprimido.close();
-            
-            // setDescomprimido(true);
+            return original;
         }
-        
         catch(IOException e)
         {
-            System.out.println("Error de IO: " + e.getMessage());   
+            System.out.println("Error de IO: " + e.getMessage());
         }
-        
         catch(Exception e)
         {
             System.out.println("Error inesperado: " + e.getMessage());
         }
+        return null;
     }
     
-    public void setComprimido(boolean ter)
+    /*public EstadosHilo getEstadoHilo()
     {
-        termino = ter;
-    }
-    
-    public boolean getComprimido()
-    {
-        return termino;
-    }        
-            
-    public void setDescomprimido(boolean ter)
-    {
-        termino = ter;
-    }
-    
-    public boolean getDescomprimido()
-    {
-        return termino;
-    }        
-    
+        return this.estadoHilo;
+    }*/
 }
-
