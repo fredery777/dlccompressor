@@ -17,16 +17,16 @@ public class VentanaInicio extends javax.swing.JFrame
     private File f;
     private int porcentaje;
     private int pCompletado;
-    private hilo.Compresor comp = new hilo.Compresor();
+    private boolean terminar = false;
     
-    private HiloCompresor hilo = null;   // -.-
-    private boolean terminar;
+    private hilo.Compresor compresor = new hilo.Compresor();
+    private HiloCompresor hiloCompresor = null;
     
     /** Creates new form VentanaInicial */
     public VentanaInicio()
     {
         initComponents();
-        hilo = new HiloCompresor();  // probar e el botón
+        hiloCompresor = new HiloCompresor();  // probar e el botón
     }
     
     /** This method is called from within the constructor to
@@ -310,9 +310,9 @@ public class VentanaInicio extends javax.swing.JFrame
         }
         else
         {
-            comp.comprimir(txtRutaComprimir.getText());
-            
-            // ejecutar();
+            // compresor.comprimir(txtRutaComprimir.getText());
+            System.out.println("Lo que quiero comprimir "+txtRutaComprimir.getText());
+            ejecutar(txtRutaComprimir.getText());
         }
     }
     
@@ -330,44 +330,25 @@ public class VentanaInicio extends javax.swing.JFrame
         }
         else 
         {
-            comp.descomprimir(txtRutaDescomprimir.getText());
-            
-            // ejecutar();
+            // compresor.descomprimir(txtRutaDescomprimir.getText());
+            ejecutar(txtRutaDescomprimir.getText());
         }
     }
     
     // ............................................................
     
-    /*public void Ejecutar()
+    public void ejecutar(String archivo)
     {
-        this.terminar = false;
-        File origen = new File(v.getJTextOrigen());
-        File destino = new File(v.getJTextDestino());
-        File nuevoNombre = new File(v.getJTextNuevoNombre());
-        File D2 = null;
-        
-        
-        this.hiloComp.Ejecutar(origen, nuevoNombre, destino, D2);
-        
-        //Info info = this.compresor.Ejecutar(origen, nuevoNombre, destino, D2);
-        //if(info != null && info.codigo > 0)
-        //{ v.setJTextOrigen(info.info); }
-    }*/
+        terminar = false;
+        System.out.println("Ejecutar de la ventana...");
+        hiloCompresor.ejecutar(archivo);
+    }
     
-    /*public void Terminar()
+    public void terminar()
     {
-        this.terminar = true;
-        this.hiloComp.Terminar();
-    }*/
-    
-    /*public String DirePadre(String a)
-    {
-        try{
-        return (new File(a)).getParent();
-        }
-        catch(Exception ex){}
-        return "";
-    }*/
+        terminar = true;
+        hiloCompresor.Terminar();
+    }
     
     // ............................................................
     
