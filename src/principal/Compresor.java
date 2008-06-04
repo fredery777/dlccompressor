@@ -210,7 +210,6 @@ public class Compresor
         }
         return null;
     }
-
     
     /**
      *  Descomprime un archivo usando un Arbol de Huffman para determinar el
@@ -260,7 +259,7 @@ public class Compresor
             // ... la cantidad de signos de la tabla (o sea, la cantidad de hojas)...
             cantSignos = comprimido.readInt();
             
-            // ...creo de nuevo el 'rbol en memoria...
+            // ...creo de nuevo el árbol en memoria...
             ht = new ArbolHuffman(cantSignos);
             
             // ... y recupero uno a uno los signos originales, guardándolos de nuevo en el arbol...
@@ -344,7 +343,7 @@ public class Compresor
                 {
                     comprimido.close();
                     nuevo.close();
-                    return null;
+                    return fileName;
                 }
             }
             nuevo.close();
@@ -361,9 +360,4 @@ public class Compresor
         }
         return null;
     }
-    
-    /*public EstadosHilo getEstadoHilo()
-    {
-        return this.estadoHilo;
-    }*/
 }
