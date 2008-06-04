@@ -9,29 +9,24 @@ import java.io.*;
  */
 public class HiloCompresor
 {
-    private HiloGestor g = null;
-    
-    private Thread t = null;
+    private HiloGestor hiloGestor = null;
+    private Thread hilo = null;
     
     public HiloCompresor()
     {
-        this.g = new HiloGestor();
-        this.t = new Thread(g);
+        this.hiloGestor = new HiloGestor();
+        this.hilo = new Thread(hiloGestor);
     }
     
-    public void Ejecutar(String origen, String nuevoNombre, String destino, String D2)
+    public void ejecutar(String origen)
     {
-        Ejecutar(new File(origen), new File(nuevoNombre), new File(destino), new File(D2));
-    }
-    
-    public void Ejecutar(File origen, File nuevoNombre, File destino, File D2)
-    {
-        if(t.isAlive() == false) // comprueba si el hilo sigue vivo
+        if(!hilo.isAlive()) // comprueba si el hilo sigue vivo
         {
             System.out.println("Iniciando compresión...");
-            g.set(origen, nuevoNombre, destino, D2);
-            t = new Thread(g);
-            t.start();
+            System.out.println("Ejecutar TRUe de HiloCompresor...");
+            hiloGestor.setOrigen(origen);
+            hilo = new Thread(hiloGestor);
+            hilo.start();
         }
         else
         {
@@ -46,6 +41,6 @@ public class HiloCompresor
     
     public void Terminar()
     {
-        g.Terminar();;
+        hiloGestor.Terminar();
     }
 }

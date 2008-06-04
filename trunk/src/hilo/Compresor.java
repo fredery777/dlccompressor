@@ -9,17 +9,17 @@ import principal.*;
  */
 public class Compresor
 {
-    private EstadosHilo hilo = null;
+    private EstadosHilo estadoHilo = null;
     private static final String ext = ".cmp";  // extencion
     
     public Compresor()
     {
-        this.hilo = new EstadosHilo();;
+        this.estadoHilo = new EstadosHilo();;
     }
     
     public Compresor(EstadosHilo hilo)
     {
-        this.hilo = hilo;
+        this.estadoHilo = hilo;
     }
     
     /**
@@ -31,17 +31,15 @@ public class Compresor
      */
     public File comprimir (String fileName)
     {
+        System.out.println("Estoy por comprimir ^^");
         try
         {  
             //obtengo el nombre del archivo, sin la extensi'n
             String nombre = fileName.substring( 0, fileName.indexOf(".") );
             
             // abro los archivos
-            //File f1 = new File(fileName);
             File f2Comprimido = new File(nombre + Compresor.ext);
-            
             RandomAccessFile fuente = new RandomAccessFile (fileName, "r");
-            //esta mas abajo repetido// RandomAccessFile comprimido = new RandomAccessFile (f2Comprimido, "rw");
             
             // cuento cu'ntas veces aparece cada byte en el archivo
             int i;
@@ -66,7 +64,7 @@ public class Compresor
             }
             
             //pregunta si debe seguir o cortar
-            if(hilo.isTerminado() == true)
+            if(estadoHilo.isTerminado() == true)
             {return null;}
             
             // creamos el Arbol con lugar para esa cantidad de signos
@@ -87,7 +85,7 @@ public class Compresor
             ht.codificar();
             
             //pregunta si debe seguir o cortar
-            if(hilo.isTerminado()) // verifico si devuelve TRUE
+            if(estadoHilo.isTerminado()) // verifico si devuelve TRUE
             {
                 fuente.close();
                 fuente = null;
@@ -131,7 +129,7 @@ public class Compresor
             }
             
             //pregunta si debe seguir o cortar
-            if(hilo.isTerminado())
+            if(estadoHilo.isTerminado())
             {
                 comprimido.close();
                 comprimido = null;
@@ -175,7 +173,7 @@ public class Compresor
                 }
                 
                 //pregunta si debe seguir o cortar
-                if(hilo.isTerminado())
+                if(estadoHilo.isTerminado())
                 {
                     comprimido.close();
                     comprimido = null;
@@ -194,7 +192,6 @@ public class Compresor
             comprimido = null;
             fuente.close();
             fuente = null;
-            
             
             return f2Comprimido;
         }
@@ -244,7 +241,7 @@ public class Compresor
             nuevo.setLength(0);
             
             //pregunta si debe seguir o cortar
-               if(hilo.isTerminado() == true)
+               if(estadoHilo.isTerminado() == true)
                 {
                     comprimido.close();
                     comprimido = null;
@@ -300,7 +297,7 @@ public class Compresor
             long cantBytes = 0;            // cu'ntos bytes llevo grabados??
             
             //pregunta si debe seguir o cortar
-            if(hilo.isTerminado())
+            if(estadoHilo.isTerminado())
                 {
                     comprimido.close();
                     comprimido = null;
@@ -344,7 +341,7 @@ public class Compresor
                 }
                 
                 //pregunta si debe seguir o cortar
-                if(hilo.isTerminado() == true)
+                if(estadoHilo.isTerminado() == true)
                 {
                     comprimido.close();
                     comprimido = null;
@@ -378,6 +375,6 @@ public class Compresor
     
     public EstadosHilo getEstadosHilo()
     {
-        return this.hilo;
+        return this.estadoHilo;
     }
 }
