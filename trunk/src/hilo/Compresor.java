@@ -29,12 +29,12 @@ public class Compresor
      *  Retorna el archivo comprimido
      *  @param fileName el archivo a comprimir
      */
-    public File comprimir (File fileName)
+    public File comprimir (String fileName)
     {
         try
         {  
             //obtengo el nombre del archivo, sin la extensi'n
-            String nombre = fileName.getAbsolutePath().substring( 0, fileName.getAbsolutePath().indexOf(".") );
+            String nombre = fileName.substring( 0, fileName.indexOf(".") );
             
             // abro los archivos
             //File f1 = new File(fileName);
@@ -102,7 +102,7 @@ public class Compresor
             
             // ...empiezo guardando el nombre y la extensi'n del original...
             comprimido.setLength(0);
-            comprimido.writeUTF(fileName.getAbsolutePath());
+            comprimido.writeUTF(fileName);
             
             // ... luego guardo la longitud en bytes del archivo original...
             comprimido.writeLong(tArch);
@@ -215,7 +215,7 @@ public class Compresor
      *  Retorna el archivo descomprimido
      *  @param fileName el archivo a descomprimir
      */
-    public File descomprimir(File fileName)
+    public File descomprimir(String fileName)
     {
         try
         {
@@ -224,9 +224,9 @@ public class Compresor
             //{ return null;//throw new Exception ("El archivo no parece un archivo comprimido...");
             //}
             //String ext = fileName.substring( pos + 1 );
-            String auxext = fileName.getAbsolutePath().substring(fileName.getAbsolutePath().length() - 4, fileName.getAbsolutePath().length());
+            String auxext = fileName.substring(fileName.length() - 4, fileName.length());
             //if( ext.compareTo("cmp") != 0 )
-            if(false == auxext.equalsIgnoreCase(Comp.ext))
+            if(false == auxext.equalsIgnoreCase(Compresor.ext))
             { return null;// throw new Exception ("El archivo no tiene la extensi'n "+ Comp.ext +"...");
             }
             
@@ -344,7 +344,7 @@ public class Compresor
                 }
                 
                 //pregunta si debe seguir o cortar
-                if(hilo.isMorir() == true)
+                if(hilo.isTerminado() == true)
                 {
                     comprimido.close();
                     comprimido = null;
@@ -352,7 +352,7 @@ public class Compresor
                     nuevo = null;
                     return null;
                 }
-            }//while
+            } // while
             nuevo.close();
             nuevo = null;
             comprimido.close();

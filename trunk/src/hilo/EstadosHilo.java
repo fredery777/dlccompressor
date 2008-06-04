@@ -6,7 +6,7 @@ package hilo;
  * @author  Morales, Gustavo - Roldán, Marco - Senn, Analía
  * @version Junio de 2008
  */
-public class EstadosHilo extends Thread //implements Runneable
+public class EstadosHilo extends Thread implements Runnable
 {
     private boolean termino = false;
     

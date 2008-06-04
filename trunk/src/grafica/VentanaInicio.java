@@ -9,6 +9,7 @@ package grafica;
 import java.io.*;
 import javax.swing.*;
 import principal.*;
+import hilo.*;
 
 public class VentanaInicio extends javax.swing.JFrame
 {
@@ -16,12 +17,16 @@ public class VentanaInicio extends javax.swing.JFrame
     private File f;
     private int porcentaje;
     private int pCompletado;
-    private Compresor comp = new Compresor();
+    private hilo.Compresor comp = new hilo.Compresor();
+    
+    private HiloCompresor hilo = null;   // -.-
+    private boolean terminar;
     
     /** Creates new form VentanaInicial */
     public VentanaInicio()
     {
         initComponents();
+        hilo = new HiloCompresor();  // probar e el botón
     }
     
     /** This method is called from within the constructor to
@@ -231,7 +236,7 @@ public class VentanaInicio extends javax.swing.JFrame
 
     private void btnDetenerActionPerformed(java.awt.event.ActionEvent evt)
     {//GEN-FIRST:event_btnDetenerActionPerformed
-    // comp.interrupt();
+        // terminar();
     }//GEN-LAST:event_btnDetenerActionPerformed
 
     private void salirActionPerformed(java.awt.event.ActionEvent evt) 
@@ -289,8 +294,6 @@ public class VentanaInicio extends javax.swing.JFrame
     {
         txtRutaComprimir.setText("");
         txtRutaDescomprimir.setText("");
-        // btnComprimir.setEnabled(false);
-        // btnDescomprimir.setEnabled(false);
     }
     
     /**
@@ -308,6 +311,8 @@ public class VentanaInicio extends javax.swing.JFrame
         else
         {
             comp.comprimir(txtRutaComprimir.getText());
+            
+            // ejecutar();
         }
     }
     
@@ -326,8 +331,45 @@ public class VentanaInicio extends javax.swing.JFrame
         else 
         {
             comp.descomprimir(txtRutaDescomprimir.getText());
+            
+            // ejecutar();
         }
     }
+    
+    // ............................................................
+    
+    /*public void Ejecutar()
+    {
+        this.terminar = false;
+        File origen = new File(v.getJTextOrigen());
+        File destino = new File(v.getJTextDestino());
+        File nuevoNombre = new File(v.getJTextNuevoNombre());
+        File D2 = null;
+        
+        
+        this.hiloComp.Ejecutar(origen, nuevoNombre, destino, D2);
+        
+        //Info info = this.compresor.Ejecutar(origen, nuevoNombre, destino, D2);
+        //if(info != null && info.codigo > 0)
+        //{ v.setJTextOrigen(info.info); }
+    }*/
+    
+    /*public void Terminar()
+    {
+        this.terminar = true;
+        this.hiloComp.Terminar();
+    }*/
+    
+    /*public String DirePadre(String a)
+    {
+        try{
+        return (new File(a)).getParent();
+        }
+        catch(Exception ex){}
+        return "";
+    }*/
+    
+    // ............................................................
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnArchComprimir;
