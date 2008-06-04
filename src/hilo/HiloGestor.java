@@ -9,20 +9,17 @@ import java.io.*;
  */
 public class HiloGestor implements Runnable
 {
-    private Empaquetador empaquetador = null;
     private Compresor compresor = null;
     private String origen = null;
     private boolean terminar = false;
     
     public HiloGestor()
     {
-        this.empaquetador = new Empaquetador();    //se le puede enviar un parametro HILO
         this.compresor = new Compresor();
     }
     
     public void setOrigen(String origen)
     {
-        System.out.println("HiloGestor origen: " + origen);
         this.origen = origen;
     }
     

@@ -1,12 +1,3 @@
-/*
- * ArbolHuffman.java
- *
- * Created on 5 de mayo de 2008, 11:13
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
-
 package principal;
 /**
  * Representa un árbol de Huffman, implementado sobre un arreglo.

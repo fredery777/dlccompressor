@@ -18,8 +18,7 @@ public class VentanaInicio extends javax.swing.JFrame
     private int porcentaje;
     private int pCompletado;
     private boolean terminar = false;
-    
-    private hilo.Compresor compresor = new hilo.Compresor();
+    // private hilo.Compresor compresor = new hilo.Compresor();
     private HiloCompresor hiloCompresor = null;
     
     /** Creates new form VentanaInicial */
@@ -287,8 +286,6 @@ public class VentanaInicio extends javax.swing.JFrame
     
     /**
       * Clase para setear los componentes a su estado inicial
-      * @author  Morales, Gustavo - Roldán, Marco - Senn, Analía
-      * @version Junio de 2008
       */
     private void limpiar ()
     {
@@ -299,8 +296,6 @@ public class VentanaInicio extends javax.swing.JFrame
     /**
       * Clase que llama al metodo comprimir, verificando previamente que el
       * usuario haya seleccionado un archivo
-      * @author  Morales, Gustavo - Roldán, Marco - Senn, Analía
-      * @version Junio de 2008
       */
     public void chequearComprimir()
     {
@@ -310,17 +305,13 @@ public class VentanaInicio extends javax.swing.JFrame
         }
         else
         {
-            // compresor.comprimir(txtRutaComprimir.getText());
-            System.out.println("Lo que quiero comprimir "+txtRutaComprimir.getText());
-            ejecutar(txtRutaComprimir.getText());
+            ejecutar(txtRutaComprimir.getText(),"comp");
         }
     }
     
     /**
       * Clase que llama al metodo descomprimir, verificando previamente que el
       * usuario haya seleccionado un archivo
-      * @author  Morales, Gustavo - Roldán, Marco - Senn, Analía
-      * @version Junio de 2008
       */
     public void chequearDescomprimir()
     {
@@ -330,18 +321,15 @@ public class VentanaInicio extends javax.swing.JFrame
         }
         else 
         {
-            // compresor.descomprimir(txtRutaDescomprimir.getText());
-            ejecutar(txtRutaDescomprimir.getText());
+            ejecutar(txtRutaDescomprimir.getText(), "descomp");
         }
     }
     
-    // ............................................................
-    
-    public void ejecutar(String archivo)
+    public void ejecutar(String archivo, String accion)
     {
         terminar = false;
         System.out.println("Ejecutar de la ventana...");
-        hiloCompresor.ejecutar(archivo);
+        hiloCompresor.ejecutar(archivo, accion);
     }
     
     public void terminar()
@@ -349,8 +337,6 @@ public class VentanaInicio extends javax.swing.JFrame
         terminar = true;
         hiloCompresor.Terminar();
     }
-    
-    // ............................................................
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnArchComprimir;
