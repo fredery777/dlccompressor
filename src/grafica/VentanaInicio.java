@@ -19,6 +19,7 @@ public class VentanaInicio extends javax.swing.JFrame
     private int pCompletado;
     private boolean terminar;
     private HiloCompresor hiloCompresor = null;
+    private VentanaProgreso progreso;
     
     /** Creates new form VentanaInicial */
     public VentanaInicio()
@@ -245,8 +246,6 @@ public class VentanaInicio extends javax.swing.JFrame
     
     /**
       * Clase que selecciona el archivo a comprimir o descomprimir
-      * @author  Morales, Gustavo - Roldán, Marco - Senn, Analía
-      * @version Junio de 2008
       */
     private void seleccionar(String opcion)
     {
@@ -264,23 +263,6 @@ public class VentanaInicio extends javax.swing.JFrame
             {
                 txtRutaDescomprimir.setText(f.getAbsolutePath());
             }
-        }
-    }
-    
-    /**
-      * Clase para calcular el porcentaje de progreso en la tarea
-      * de compresión o descompresión
-      * @author  Morales, Gustavo - Roldán, Marco - Senn, Analía
-      * @version Junio de 2008
-      */
-    public void progreso(long actual, long tam)
-    {
-        porcentaje = (int) (actual * 100 / tam);
-        if (porcentaje > pCompletado)
-        {
-            pCompletado = porcentaje;
-            System.out.println("Completado %" + pCompletado);
-            jpbProgreso.setValue(porcentaje);
         }
     }
     
@@ -328,7 +310,8 @@ public class VentanaInicio extends javax.swing.JFrame
     public void ejecutar(String archivo, String accion)
     {
         terminar = false;
-        hiloCompresor.ejecutar(archivo, accion);
+        progreso = new VentanaProgreso();
+        hiloCompresor.ejecutar(archivo, accion, progreso);
     }
     
     public void terminar()

@@ -37,11 +37,11 @@ public class Compresor extends javax.swing.JOptionPane
      *  Retorna el archivo comprimido
      *  @param fileName el archivo a comprimir
      */
-    public void comprimir(String fileName)
+    public void comprimir(String fileName, VentanaProgreso progreso)
     {
         try
         {  
-            //obtengo el nombre del archivo, sin la extensión
+            // obtengo el nombre del archivo, sin la extensión
             String nombre = fileName.substring( 0, fileName.indexOf(".") );
             
             // abro los archivos
@@ -74,7 +74,7 @@ public class Compresor extends javax.swing.JOptionPane
                 if( c[i] != 0 ) { cantSignos++; }
             }
             
-            // El hilo sigue vivo?
+            // el hilo sigue vivo?
             if(estadoHilo.isTerminado())
             {
                 fuente.close();
@@ -97,7 +97,7 @@ public class Compresor extends javax.swing.JOptionPane
             // armamos el árbol y obtenenos el código Huffman de cada signo
             ht.codificar();
             
-            // El hilo sigue vivo?
+            // el hilo sigue vivo?
             if(estadoHilo.isTerminado())
             {
                 fuente.close();
@@ -138,7 +138,7 @@ public class Compresor extends javax.swing.JOptionPane
                 comprimido.writeInt( a[i].getDerecho());
             }
             
-            // El hilo sigue vivo?
+            // el hilo sigue vivo?
             if(estadoHilo.isTerminado())
             {
                 comprimido.close();
@@ -155,6 +155,7 @@ public class Compresor extends javax.swing.JOptionPane
             // variables para calcular el porcentaje de avance en la compresión
             float porcBytes = 0;
             int porcentaje = 0;
+            int avance = 0;
             
             while(fuente.getFilePointer() < fuente.length())
             {
@@ -185,11 +186,16 @@ public class Compresor extends javax.swing.JOptionPane
                         // calculo el porcentale de compresión
                         porcBytes = (float)((float)fuente.getFilePointer() / fuente.length()) * 100;
                         porcentaje =(int)porcBytes;    
-                        System.out.println("Porcentaje: " + porcentaje);
+                        if (porcentaje > avance)
+                        {
+                            avance = porcentaje;
+                            System.out.println("Porcentaje de compresión: " + avance);
+                        }
+
                     }
                 }
                 
-                // El hilo sigue vivo?
+                // el hilo sigue vivo?
                 if(estadoHilo.isTerminado())
                 {
                     comprimido.close();
@@ -221,7 +227,7 @@ public class Compresor extends javax.swing.JOptionPane
      *  Retorna el archivo descomprimido
      *  @param fileName el archivo a descomprimir
      */
-    public void descomprimir(String fileName)
+    public void descomprimir(String fileName, VentanaProgreso progreso)
     {
         try
         {
@@ -302,7 +308,7 @@ public class Compresor extends javax.swing.JOptionPane
             // variables para calcular el porcentaje de avance en la descompresión
             float porcBytes = 0;
             int porcentaje = 0;
-            
+            int avance = 0;
 
             // el hilo sigue vivo?
             if(estadoHilo.isTerminado())
@@ -343,7 +349,11 @@ public class Compresor extends javax.swing.JOptionPane
                         // calculo el avance de la descompresión
                         porcBytes = (float)((float)fuente.getFilePointer() / fuente.length()) * 100;
                         porcentaje =(int)porcBytes;    
-                        System.out.println("Porcentaje: " + porcentaje);
+                        if (porcentaje > avance)
+                        {
+                            avance = porcentaje;
+                            System.out.println("Porcentaje de descompresión: " + avance);
+                        }
 
                         // volver a la raiz
                         nodo = raiz;

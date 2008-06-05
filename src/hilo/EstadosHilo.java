@@ -1,5 +1,6 @@
 package hilo;
 
+import grafica.*;
 import principal.*;
 
 /**
@@ -10,6 +11,7 @@ import principal.*;
  */
 public class EstadosHilo implements Runnable
 {
+    private VentanaProgreso progreso = null;
     private Compresor compresor = null;
     private String archivo = null;
     private String accion = null;
@@ -23,14 +25,15 @@ public class EstadosHilo implements Runnable
     public void run()
     {
         termino = false;
-        if(accion.compareTo("comp")==0) compresor.comprimir(archivo);
-        else compresor.descomprimir(archivo);
+        if(accion.compareTo("comp")==0) compresor.comprimir(archivo, progreso);
+        else compresor.descomprimir(archivo, progreso);
     }
     
-    public void setArchivo(String arch, String acc)
+    public void setArchivo(String arch, String acc, VentanaProgreso prog)
     {
         archivo = arch;
         accion = acc;
+        progreso = prog;
     }
     
     public boolean isTerminado()
