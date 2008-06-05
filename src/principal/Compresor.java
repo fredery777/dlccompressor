@@ -9,7 +9,7 @@ import java.io.*;
  * @author Morales, Gustavo - Roldán, Marco - Senn, Analía
  * @version Junio de 2008
  */
-public class Compresor
+public class Compresor extends javax.swing.JOptionPane
 {
     private ArbolHuffman ht;
     private RandomAccessFile fuente;
@@ -37,7 +37,7 @@ public class Compresor
      *  Retorna el archivo comprimido
      *  @param fileName el archivo a comprimir
      */
-    public String comprimir(String fileName)
+    public void comprimir(String fileName)
     {
         try
         {  
@@ -77,7 +77,6 @@ public class Compresor
             if(estadoHilo.isTerminado())
             {
                 fuente.close();
-                return fileName;
             }
             
             // creamos el Arbol con lugar para esa cantidad de signos
@@ -101,7 +100,6 @@ public class Compresor
             if(estadoHilo.isTerminado())
             {
                 fuente.close();
-                return fileName;
             }
             
             // cantidad de bytes del archivo fuente
@@ -144,7 +142,6 @@ public class Compresor
             {
                 comprimido.close();
                 fuente.close();
-                return fileName;
             }
             
             // comienza fase de compresión (por fin...)
@@ -179,12 +176,6 @@ public class Compresor
                         mascara = 0x0080;
                         salida  = 0x0000;
                     }
-                    /*if(estadoHilo.isTerminado())
-                    {
-                        comprimido.close();
-                        fuente.close();
-                        return fileName;
-                    }*/
                 }
                 
                 // El hilo sigue vivo?
@@ -192,7 +183,6 @@ public class Compresor
                 {
                     comprimido.close();
                     fuente.close();
-                    return fileName;
                 }
             }
 
@@ -203,8 +193,6 @@ public class Compresor
             }
             comprimido.close();
             fuente.close();
-            
-            return nombre;
         }
         catch(IOException e)
         {
@@ -214,7 +202,6 @@ public class Compresor
         {
             System.out.println("Error inesperado: " + e.getMessage());
         }
-        return null;
     }
     
     /**
@@ -223,16 +210,15 @@ public class Compresor
      *  Retorna el archivo descomprimido
      *  @param fileName el archivo a descomprimir
      */
-    public String descomprimir(String fileName)
+    public void descomprimir(String fileName)
     {
         try
         {
             int pos = fileName.indexOf(".");
-            if(pos == -1) return "El archivo no parece un archivo comprimido...";
+            if(pos == -1) throw new Exception ("El archivo no parece un archivo comprimido...");
             
             String ext = fileName.substring( pos + 1 );
-            //String auxext = fileName.substring(fileName.length()-4, fileName.length());
-            if( ext.compareTo("huffman") != 0 ) return "El archivo no parece un archivo comprimido...";
+            if( ext.compareTo("huffman") != 0 ) throw new Exception ("El archivo no tiene la extensión cmp...");
             
             // abro el archivo comprimido...
             File f1 = new File(fileName);
@@ -254,7 +240,6 @@ public class Compresor
                 {
                     comprimido.close();
                     nuevo.close();
-                    return fileName;
                 }
             
             // y ahora, recupero todos los datos que el compresor deja adelante...
@@ -308,7 +293,6 @@ public class Compresor
             {
                 comprimido.close();
                 nuevo.close();
-                return fileName;
             }
             
             // leo byte por byte el archivo comprimido
@@ -349,12 +333,10 @@ public class Compresor
                 {
                     comprimido.close();
                     nuevo.close();
-                    return fileName;
                 }
             }
             nuevo.close();
             comprimido.close();
-            return original;
         }
         catch(IOException e)
         {
@@ -364,6 +346,5 @@ public class Compresor
         {
             System.out.println("Error inesperado: " + e.getMessage());
         }
-        return null;
     }
 }
