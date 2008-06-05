@@ -1,5 +1,6 @@
 package principal;
 
+import grafica.*;
 import hilo.*;
 import java.io.*;
 
@@ -17,7 +18,6 @@ public class Compresor extends javax.swing.JOptionPane
     private RandomAccessFile nuevo;
     private int cantSignos;
     private boolean termino;
-    
     private EstadosHilo estadoHilo = null;
     
     public Compresor()
@@ -57,6 +57,7 @@ public class Compresor extends javax.swing.JOptionPane
 
             int c[] = new int[256];  // un vector de contadores
             for(i=0; i<256; i++) { c[i] = 0; }
+            
             
             // contamos los signos...
             while(fuente.getFilePointer() < fuente.length())
@@ -150,6 +151,11 @@ public class Compresor extends javax.swing.JOptionPane
             int bit = 0;             // en qué bit vamos?           
             
             fuente.seek(0);   // vuelvo el fp al principio
+            
+            // variables para calcular el porcentaje de avance en la compresión
+            float porcBytes = 0;
+            int porcentaje = 0;
+            
             while(fuente.getFilePointer() < fuente.length())
             {
                 car = fuente.readByte();
@@ -175,6 +181,11 @@ public class Compresor extends javax.swing.JOptionPane
                         bit = 0;
                         mascara = 0x0080;
                         salida  = 0x0000;
+                        
+                        // calculo el porcentale de compresión
+                        porcBytes = (float)((float)fuente.getFilePointer() / fuente.length()) * 100;
+                        porcentaje =(int)porcBytes;    
+                        System.out.println("Porcentaje: " + porcentaje);
                     }
                 }
                 
@@ -286,8 +297,13 @@ public class Compresor extends javax.swing.JOptionPane
             short aux;                     // auxiliar para desenmascarar
             short mascara;
             int bit, nodo = raiz;          // comenzamos desde la raiz y vamos bajando
-            long cantBytes = 0;            // cu'ntos bytes llevo grabados??
+            long cantBytes = 0;            // cuántos bytes llevo grabados??
             
+            // variables para calcular el porcentaje de avance en la descompresión
+            float porcBytes = 0;
+            int porcentaje = 0;
+            
+
             // el hilo sigue vivo?
             if(estadoHilo.isTerminado())
             {
@@ -301,6 +317,7 @@ public class Compresor extends javax.swing.JOptionPane
                 byte  car = comprimido.readByte();
                 short sCar = (short) (car & 0x00FF);  // guardo el byte en un short, pero con todo el primer byte en cero 
                 mascara = 0x0080;
+                
                 for(bit = 0; bit < 8 && cantBytes != tArch; bit++)
                 {
                     aux = (short)(sCar & mascara);
@@ -322,6 +339,11 @@ public class Compresor extends javax.swing.JOptionPane
                         byte sal = ht.getSigno(nodo);
                         nuevo.writeByte(sal);
                         cantBytes++;
+
+                        // calculo el avance de la descompresión
+                        porcBytes = (float)((float)fuente.getFilePointer() / fuente.length()) * 100;
+                        porcentaje =(int)porcBytes;    
+                        System.out.println("Porcentaje: " + porcentaje);
 
                         // volver a la raiz
                         nodo = raiz;
