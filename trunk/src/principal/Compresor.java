@@ -54,7 +54,10 @@ public class Compresor extends javax.swing.JOptionPane
             // cuento cuántas veces aparece cada byte en el archivo
             int i;
             byte car;
-
+            
+            // progreso.getJProgressBar().setString("Creando Arbol de Huffman...");
+            // progreso.getJProgressBar().update(progreso.getJProgressBar().getGraphics());
+            
             int c[] = new int[256];  // un vector de contadores
             for(i=0; i<256; i++) { c[i] = 0; }
             
@@ -189,7 +192,10 @@ public class Compresor extends javax.swing.JOptionPane
                         if (porcentaje > avance)
                         {
                             avance = porcentaje;
-                            System.out.println("Porcentaje de compresión: " + avance);
+                            System.out.println("Porcentaje de compresión: " + avance + "%");
+                            // progreso.getJProgressBar().setValue(avance);
+                            // progreso.getJProgressBar().setString(progreso.getNombre()+": "+progreso.getJProgressBar().getValue()+"%");
+                            // progreso.getJProgressBar().update(progreso.getJProgressBar().getGraphics());
                         }
 
                     }
@@ -210,6 +216,8 @@ public class Compresor extends javax.swing.JOptionPane
             }
             comprimido.close();
             fuente.close();
+            // progreso.setVisible(false);
+            // progreso.dispose();
         }
         catch(IOException e)
         {
@@ -352,7 +360,10 @@ public class Compresor extends javax.swing.JOptionPane
                         if (porcentaje > avance)
                         {
                             avance = porcentaje;
-                            System.out.println("Porcentaje de descompresión: " + avance);
+                            System.out.println("Porcentaje de descompresión: " + avance + "%");
+                            // progreso.getJProgressBar().setValue(avance);
+                            // progreso.getJProgressBar().setString(progreso.getNombre()+": "+progreso.getJProgressBar().getValue()+"%");
+                            // progreso.getJProgressBar().update(progreso.getJProgressBar().getGraphics());
                         }
 
                         // volver a la raiz
@@ -369,6 +380,8 @@ public class Compresor extends javax.swing.JOptionPane
             }
             nuevo.close();
             comprimido.close();
+            // progreso.setVisible(false);
+            // progreso.dispose();
         }
         catch(IOException e)
         {
