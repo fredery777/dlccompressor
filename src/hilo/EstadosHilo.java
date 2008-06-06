@@ -12,6 +12,8 @@ import javax.swing.*;
 public class EstadosHilo implements Runnable
 {
     private JProgressBar barra;
+    private JButton boton;
+    
     private Compresor compresor = null;
     private String archivo = null;
     private String accion = null;
@@ -25,15 +27,17 @@ public class EstadosHilo implements Runnable
     public void run()
     {
         termino = false;
-        if(accion.compareTo("comp")==0) compresor.comprimir(archivo, barra);
-        else compresor.descomprimir(archivo, barra);
+        if(accion.compareTo("comp")==0) compresor.comprimir(archivo, barra, boton);
+        else compresor.descomprimir(archivo, barra, boton);
     }
     
-    public void setArchivo(String arch, String acc, JProgressBar barraProgreso)
+    public void setArchivo(String arch, String acc, JProgressBar barraProgreso, JButton botonDetener)
     {
         archivo = arch;
         accion = acc;
+        
         barra = barraProgreso;
+        boton = botonDetener;
     }
     
     public boolean isTerminado()

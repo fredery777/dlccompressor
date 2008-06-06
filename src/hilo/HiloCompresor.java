@@ -20,12 +20,12 @@ public class HiloCompresor
         hilo = new Thread(estadosHilo);
     }
     
-    public void ejecutar(String archivo, String accion, JProgressBar barra)
+    public void ejecutar(String archivo, String accion, JProgressBar barra, JButton boton)
     {
         if(!hilo.isAlive())
         {
             System.out.println("Procesando archivos...");
-            estadosHilo.setArchivo(archivo, accion, barra);
+            estadosHilo.setArchivo(archivo, accion, barra, boton);
             hilo = new Thread(estadosHilo);
             hilo.start();
         }
