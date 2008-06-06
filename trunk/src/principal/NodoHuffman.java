@@ -1,17 +1,8 @@
-/*
- * NodoHuffman.java
- *
- * Created on 5 de mayo de 2008, 11:18
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
-
 package principal;
+
 /**
  * Representa un nodo del árbol de Huffman, que se implementa sobre un vector (por eso el nodo no tiene
  * "punteros" en el sentido clásico).
- * 
  * @author Ing. Valerio Frittelli
  * @version Octubre de 2004
  */

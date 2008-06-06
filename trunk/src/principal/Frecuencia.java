@@ -1,16 +1,7 @@
-/*
- * Frecuencia.java
- *
- * Created on 5 de mayo de 2008, 11:18
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
-
 package principal;
+
 /**
  * Clase para representar el info de la Cola de Prioridad.
- * 
  * @author Ing. Valerio Frittelli
  * @version Octubre de 2004
  */

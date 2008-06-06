@@ -288,10 +288,10 @@ public class Compresor
             }
             
             // ...ahora le toca al vector del árbol...
-            int n = cantSignos * 2 - 1;  // cantidad total de nodos del 'rbol
+            int n = cantSignos * 2 - 1;  // cantidad total de nodos del árbol
             for(i = 0; i < n; i++)
             {
-                // ...por cada nodo, recuperar todos sus datos y volver a armar el 'rbol...
+                // ...por cada nodo, recuperar todos sus datos y volver a armar el árbol...
                 int f  = comprimido.readInt();           // frecuencia
                 int padre = comprimido.readInt();        // padre
                 boolean left = comprimido.readBoolean(); // es izquierdo?
