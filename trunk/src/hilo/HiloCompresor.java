@@ -2,7 +2,7 @@ package hilo;
 
 import java.io.*;
 import principal.*;
-import grafica.*;
+import javax.swing.*;
 
 /**
  * Clase que maneja el hilo que lanza la compresión o descompresión de archivos
@@ -20,12 +20,12 @@ public class HiloCompresor
         hilo = new Thread(estadosHilo);
     }
     
-    public void ejecutar(String archivo, String accion, VentanaProgreso progreso)
+    public void ejecutar(String archivo, String accion, JProgressBar barra)
     {
         if(!hilo.isAlive())
         {
             System.out.println("Procesando archivos...");
-            estadosHilo.setArchivo(archivo, accion, progreso);
+            estadosHilo.setArchivo(archivo, accion, barra);
             hilo = new Thread(estadosHilo);
             hilo.start();
         }

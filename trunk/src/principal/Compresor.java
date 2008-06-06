@@ -1,8 +1,8 @@
 package principal;
 
-import grafica.*;
 import hilo.*;
 import java.io.*;
+import javax.swing.*;
 
 /**
  * Un compresor de archivos basado en un Arbol de Huffman.
@@ -10,7 +10,7 @@ import java.io.*;
  * @author Morales, Gustavo - Roldán, Marco - Senn, Analía
  * @version Junio de 2008
  */
-public class Compresor extends javax.swing.JOptionPane
+public class Compresor
 {
     private ArbolHuffman ht;
     private RandomAccessFile fuente;
@@ -37,7 +37,7 @@ public class Compresor extends javax.swing.JOptionPane
      *  Retorna el archivo comprimido
      *  @param fileName el archivo a comprimir
      */
-    public void comprimir(String fileName, VentanaProgreso progreso)
+    public void comprimir(String fileName, JProgressBar barra)
     {
         try
         {  
@@ -54,9 +54,6 @@ public class Compresor extends javax.swing.JOptionPane
             // cuento cuántas veces aparece cada byte en el archivo
             int i;
             byte car;
-            
-            //progreso.getJProgressBar().setString("Creando Arbol de Huffman...");
-            //progreso.getJProgressBar().update(progreso.getJProgressBar().getGraphics());
             
             int c[] = new int[256];  // un vector de contadores
             for(i=0; i<256; i++) { c[i] = 0; }
@@ -193,9 +190,10 @@ public class Compresor extends javax.swing.JOptionPane
                         {
                             avance = porcentaje;
                             System.out.println("Porcentaje de compresión: " + avance + "%");
-                             //progreso.getJProgressBar().setValue(avance);
-                             //progreso.getJProgressBar().setString(progreso.getNombre()+": "+progreso.getJProgressBar().getValue()+"%");
-                             //progreso.getJProgressBar().update(progreso.getJProgressBar().getGraphics());
+                            barra.setValue(avance);
+                            //progreso.getJProgressBar().setValue(avance);
+                            //progreso.getJProgressBar().setString(progreso.getNombre()+": "+progreso.getJProgressBar().getValue()+"%");
+                            //progreso.getJProgressBar().update(progreso.getJProgressBar().getGraphics());
                         }
 
                     }
@@ -235,7 +233,7 @@ public class Compresor extends javax.swing.JOptionPane
      *  Retorna el archivo descomprimido
      *  @param fileName el archivo a descomprimir
      */
-    public void descomprimir(String fileName, VentanaProgreso progreso)
+    public void descomprimir(String fileName, JProgressBar barra)
     {
         try
         {
@@ -361,9 +359,7 @@ public class Compresor extends javax.swing.JOptionPane
                         {
                             avance = porcentaje;
                             System.out.println("Porcentaje de descompresión: " + avance + "%");
-                            // progreso.getJProgressBar().setValue(avance);
-                            // progreso.getJProgressBar().setString(progreso.getNombre()+": "+progreso.getJProgressBar().getValue()+"%");
-                            // progreso.getJProgressBar().update(progreso.getJProgressBar().getGraphics());
+                            barra.setValue(avance);
                         }
 
                         // volver a la raiz
@@ -380,8 +376,6 @@ public class Compresor extends javax.swing.JOptionPane
             }
             nuevo.close();
             comprimido.close();
-            // progreso.setVisible(false);
-            // progreso.dispose();
         }
         catch(IOException e)
         {

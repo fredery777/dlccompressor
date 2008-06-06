@@ -19,7 +19,6 @@ public class VentanaInicio extends javax.swing.JFrame
     private int pCompletado;
     private boolean terminar;
     private HiloCompresor hiloCompresor = null;
-    private VentanaProgreso progreso;
     
     /** Creates new form VentanaInicial */
     public VentanaInicio()
@@ -310,8 +309,7 @@ public class VentanaInicio extends javax.swing.JFrame
     public void ejecutar(String archivo, String accion)
     {
         terminar = false;
-        progreso = new VentanaProgreso();
-        hiloCompresor.ejecutar(archivo, accion, progreso);
+        hiloCompresor.ejecutar(archivo, accion, jpbProgreso);
     }
     
     public void terminar()
