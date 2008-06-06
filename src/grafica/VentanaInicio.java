@@ -264,12 +264,14 @@ public class VentanaInicio extends javax.swing.JFrame
     }
     
     /**
-      * Clase para setear los componentes a su estado inicial
+      * Setea los componentes a su estado inicial
       */
     private void limpiar ()
     {
         txtRutaComprimir.setText("");
         txtRutaDescomprimir.setText("");
+        jpbProgreso.setValue(0);
+        jpbProgreso.setString("");
     }
     
     /**
