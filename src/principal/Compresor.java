@@ -55,6 +55,9 @@ public class Compresor
             int i;
             byte car;
             
+            // empiezo a armar el árbol de Huffman
+            barra.setString("Creando Arbol de Huffman...");
+            
             int c[] = new int[256];  // un vector de contadores
             for(i=0; i<256; i++) { c[i] = 0; }
             
@@ -259,6 +262,9 @@ public class Compresor
                     comprimido.close();
                     nuevo.close();
                 }
+            
+            // empiezo a recontruir el árbol de Huffman
+            barra.setString("Recuperando el Arbol de Huffman...");
             
             // y ahora, recupero todos los datos que el compresor deja adelante...
             
