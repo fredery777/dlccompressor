@@ -153,7 +153,7 @@ public class Compresor
             }
             
             // ... por ultimo la raiz
-            for(i = n - 1; i < n; i++)
+            for(i = n-1; i < n; i++)
             {
                 // ...para la raiz, guardar sus datos menos su padre y si es izquierdo...
                 comprimido.writeInt( a[i].getFrecuencia() );
@@ -318,21 +318,36 @@ public class Compresor
                 int padre = comprimido.readInt();        // padre
                 boolean left = comprimido.readBoolean(); // es izquierdo?
                 
-                // ...
+                // ... como no tienen hijos los creo en memoria con el valor -1
                 int hi = -1;                             // hijo izquierdo
                 int hd = -1;                             // hijo derecho
-                // ...
                 
                 NodoHuffman nh = new NodoHuffman( f, padre, left, hi, hd );
                 ht.setNodo( nh, i );
             }
+            
             // ... el resto de nodos
-            for(i = cantSignos; i < n; i++)
+            for(i = cantSignos; i < n-1; i++)
             {
                 // ...por cada nodo, recuperar todos sus datos y volver a armar el árbol...
                 int f  = comprimido.readInt();           // frecuencia
                 int padre = comprimido.readInt();        // padre
                 boolean left = comprimido.readBoolean(); // es izquierdo?
+                int hi = comprimido.readInt();           // hijo izquierdo
+                int hd = comprimido.readInt();           // hijo derecho
+                NodoHuffman nh = new NodoHuffman( f, padre, left, hi, hd );
+                ht.setNodo( nh, i );
+            }
+            
+            // ... por último la raiz
+            for(i = n-1; i < n; i++)
+            {
+                // ...por cada nodo, recuperar todos sus datos y volver a armar el árbol...
+                int f  = comprimido.readInt();           // frecuencia
+                // la raiz no tiene padre
+                int padre = -1;                          // padre
+                // es indistinto el valor
+                boolean left = true;                     // es izquierdo?
                 int hi = comprimido.readInt();           // hijo izquierdo
                 int hd = comprimido.readInt();           // hijo derecho
                 NodoHuffman nh = new NodoHuffman( f, padre, left, hi, hd );
