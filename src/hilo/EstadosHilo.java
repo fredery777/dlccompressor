@@ -28,7 +28,7 @@ public class EstadosHilo implements Runnable
     }
     
     /**
-      * El metodo comprime o descomprime en base Llama al método runmetodo terminar de la clase HiloCompresor
+      * El metodo comprime o descomprime en base a la variable "accion"
       */
     public void run()
     {
@@ -37,6 +37,9 @@ public class EstadosHilo implements Runnable
         else compresor.descomprimir(archivo, barra, boton);
     }
     
+    /**
+      * El metodo setea valores necesarios para otras clases
+      */
     public void setArchivo(String arch, String acc, JProgressBar barraProgreso, JButton botonDetener)
     {
         archivo = arch;
@@ -46,18 +49,19 @@ public class EstadosHilo implements Runnable
         boton = botonDetener;
     }
     
-    public boolean isTerminado()
+    /**
+      * @return si termino o no el hilo
+      */
+    public boolean getTerminado()
     {
         return this.termino;
     }
     
+    /**
+      * @param setea como terminado el hilo
+      */
     public void setTerminado()
     {
         this.termino = true;
-    }
-    
-    public void setActivo()
-    {
-        this.termino = false;
     }
 }

@@ -77,7 +77,7 @@ public class Compresor
             }
             
             // el hilo sigue vivo?
-            if(estadoHilo.isTerminado())
+            if(estadoHilo.getTerminado())
             {
                 fuente.close();
             }
@@ -100,7 +100,7 @@ public class Compresor
             ht.codificar();
             
             // el hilo sigue vivo?
-            if(estadoHilo.isTerminado())
+            if(estadoHilo.getTerminado())
             {
                 fuente.close();
             }
@@ -161,7 +161,7 @@ public class Compresor
             }
             
             // el hilo sigue vivo?
-            if(estadoHilo.isTerminado())
+            if(estadoHilo.getTerminado())
             {
                 comprimido.close();
                 fuente.close();
@@ -217,7 +217,7 @@ public class Compresor
                     }
                 }
                 // el hilo sigue vivo?
-                if(estadoHilo.isTerminado())
+                if(estadoHilo.getTerminado())
                 {
                     comprimido.close();
                     fuente.close();
@@ -276,7 +276,7 @@ public class Compresor
             nuevo = new RandomAccessFile(f2, "rw");
             
             // el hilo sigue vivo?
-               if(estadoHilo.isTerminado())
+               if(estadoHilo.getTerminado())
                 {
                     comprimido.close();
                     nuevo.close();
@@ -370,7 +370,7 @@ public class Compresor
             int avance = 0;
 
             // el hilo sigue vivo?
-            if(estadoHilo.isTerminado())
+            if(estadoHilo.getTerminado())
             {
                 comprimido.close();
                 nuevo.close();
@@ -419,7 +419,7 @@ public class Compresor
                     }
                 }
                 // el hilo sigue vivo?
-                if(estadoHilo.isTerminado())
+                if(estadoHilo.getTerminado())
                 {
                     comprimido.close();
                     nuevo.close();
