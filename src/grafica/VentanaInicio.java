@@ -19,6 +19,7 @@ public class VentanaInicio extends javax.swing.JFrame
     private int pCompletado;
     private boolean terminar;
     private HiloCompresor hiloCompresor = null;
+    Object[] opciones = {"Si", "No"};
     
     /** Creates new form VentanaInicial */
     public VentanaInicio()
@@ -241,7 +242,7 @@ public class VentanaInicio extends javax.swing.JFrame
     }//GEN-LAST:event_salirActionPerformed
     
     /**
-      * Clase que selecciona el archivo a comprimir o descomprimir
+      * Selecciona el archivo a comprimir o descomprimir
       */
     private void seleccionar(String opcion)
     {
@@ -272,8 +273,8 @@ public class VentanaInicio extends javax.swing.JFrame
     }
     
     /**
-      * Clase que llama al metodo comprimir, verificando previamente que el
-      * usuario haya seleccionado un archivo
+      * Llama al metodo comprimir, verificando previamente que el usuario haya
+      * seleccionado un archivo
       */
     public void chequearComprimir()
     {
@@ -289,8 +290,8 @@ public class VentanaInicio extends javax.swing.JFrame
     }
     
     /**
-      * Clase que llama al metodo descomprimir, verificando previamente que el
-      * usuario haya seleccionado un archivo
+      * Llama al metodo descomprimir, verificando previamente que el usuario
+      * haya seleccionado un archivo
       */
     public void chequearDescomprimir()
     {
@@ -300,17 +301,70 @@ public class VentanaInicio extends javax.swing.JFrame
         }
         else 
         {
-            btnDetener.setEnabled(true);
-            ejecutar(txtRutaDescomprimir.getText(), "descomp");
+            if (existencia(txtRutaDescomprimir.getText()))
+            {
+                int op = JOptionPane.showOptionDialog(this, "Desea sobreescribir el archivo?", "Sobreescrir", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
+                if (op == 0)
+                {
+                    btnDetener.setEnabled(true);
+                    ejecutar(txtRutaDescomprimir.getText(), "descomp");
+                }
+                else JOptionPane.showMessageDialog(this, "Descompresion cancelada por el usuario", "Info",JOptionPane.INFORMATION_MESSAGE);
+            }
+            else
+            {
+                btnDetener.setEnabled(true);
+                ejecutar(txtRutaDescomprimir.getText(), "descomp");
+            }
         }
     }
     
+    /**
+      * @return retorna la existencia del archivo descomprimido en el disco
+      */
+    public boolean existencia(String comprimido)
+    {
+        try
+        {
+            int pos = comprimido.indexOf(".");
+            if(pos == -1) throw new Exception ("El archivo no parece un archivo comprimido...");
+            String ext = comprimido.substring( pos + 1 );
+            if( ext.compareTo("huffman") != 0 ) throw new Exception ("El archivo no tiene la extensión huffman...");
+            
+            File f = new File(comprimido);
+            RandomAccessFile RAF = new RandomAccessFile(f, "r");    
+            String descomprimido = RAF.readUTF();
+            RAF.close();
+            f = new File(descomprimido);
+            if(f.exists())
+            { 
+                return true;
+            }
+            return false;
+        }
+        catch(IOException e)
+        {
+            JOptionPane.showMessageDialog(this, "Error al procesar el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(this, "El archivo no parece estar comprimido", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
+    }
+    
+    /**
+      * Llama al metodo ejecutar de la clase HiloCompresor
+      */
     public void ejecutar(String archivo, String accion)
     {
         terminar = false;
         hiloCompresor.ejecutar(archivo, accion, jpbProgreso, btnDetener);
     }
     
+    /**
+      * Llama al metodo terminar de la clase HiloCompresor
+      */
     public void terminar()
     {
         terminar = true;

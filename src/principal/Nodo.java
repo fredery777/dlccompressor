@@ -1,13 +1,5 @@
-/*
- * Nodo.java
- *
- * Created on 5 de mayo de 2008, 11:16
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
-
 package principal;
+
 /**
  *  Clase para representar un nodo genérico para una lista genérica.
  *  @author Ing. Valerio Frittelli
