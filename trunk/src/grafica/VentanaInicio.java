@@ -60,6 +60,7 @@ public class VentanaInicio extends javax.swing.JFrame
         setBackground(new java.awt.Color(204, 204, 255));
         setResizable(false);
         getContentPane().setLayout(null);
+        jpbProgreso.setStringPainted(true);
 
         btnArchComprimir.setText("Archivo a comprimir");
         btnArchComprimir.addActionListener(new java.awt.event.ActionListener() {

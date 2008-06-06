@@ -190,7 +190,7 @@ public class Compresor
                         {
                             avance = porcentaje;
                             barra.setValue(avance);
-                            barra.setName("Comprimiendo " + avance + "%");
+                            barra.setString("Comprimiendo " + avance + "%");
                         }
                     }
                 }
@@ -210,7 +210,7 @@ public class Compresor
             }
             comprimido.close();
             fuente.close();
-            barra.setName("Archivo comprimido!");
+            barra.setString("Archivo comprimido!");
         }
         catch(IOException e)
         {
@@ -354,7 +354,7 @@ public class Compresor
                         {
                             avance = porcentaje;
                             barra.setValue(avance);
-                            barra.setName("Descomprimiendo " + avance + "%");
+                            barra.setString("Descomprimiendo " + avance + "%");
                         }
                         // volver a la raiz
                         nodo = raiz;
@@ -370,7 +370,7 @@ public class Compresor
             }
             nuevo.close();
             comprimido.close();
-            barra.setName("Archivo descomprimido!");
+            barra.setString("Archivo descomprimido!");
         }
         catch(IOException e)
         {
