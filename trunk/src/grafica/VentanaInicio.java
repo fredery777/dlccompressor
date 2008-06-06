@@ -43,7 +43,6 @@ public class VentanaInicio extends javax.swing.JFrame
         lblRutaDescomprimir = new javax.swing.JLabel();
         lblRutaComprimir = new javax.swing.JLabel();
         txtRutaComprimir = new javax.swing.JTextField();
-        lblProgreso = new javax.swing.JLabel();
         btnArchDescomprimir = new javax.swing.JButton();
         mnuMenu = new javax.swing.JMenuBar();
         mnuArchivo = new javax.swing.JMenu();
@@ -116,10 +115,6 @@ public class VentanaInicio extends javax.swing.JFrame
         txtRutaComprimir.setEditable(false);
         getContentPane().add(txtRutaComprimir);
         txtRutaComprimir.setBounds(10, 60, 290, 20);
-
-        lblProgreso.setText("Progreso...");
-        getContentPane().add(lblProgreso);
-        lblProgreso.setBounds(130, 230, 80, 14);
 
         btnArchDescomprimir.setText("Archivo a descomprimir");
         btnArchDescomprimir.addActionListener(new java.awt.event.ActionListener() {
