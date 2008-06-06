@@ -1,13 +1,5 @@
-/*
- * ColaDePrioridad.java
- *
- * Created on 5 de mayo de 2008, 11:15
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
-
 package principal;
+
 /**
  *  Una lista genérica
  *  @author  Ing. Valerio Frittelli

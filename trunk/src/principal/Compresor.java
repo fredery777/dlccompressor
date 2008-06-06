@@ -18,7 +18,7 @@ public class Compresor
     private RandomAccessFile nuevo;
     private int cantSignos;
     private boolean termino;
-    private EstadosHilo estadoHilo = null;
+    private EstadosHilo estadoHilo;
     
     public Compresor()
     {
@@ -55,8 +55,8 @@ public class Compresor
             int i;
             byte car;
             
-            // empiezo a armar el árbol de Huffman
-            barra.setString("Creando Arbol de Huffman...");
+            // empiezo a recorrer el archivo para armar el árbol de Huffman
+            barra.setString("Analizando el archivo....");
             
             int c[] = new int[256];  // un vector de contadores
             for(i=0; i<256; i++) { c[i] = 0; }
@@ -121,7 +121,7 @@ public class Compresor
             // ... la cantidad de s'mbolos (o sea, la cantidad de hojas del 'rbol)...
             comprimido.writeInt(cantSignos);
             
-            // ... ahora la tabla de s'mbolos tal como est' en el arbol...
+            // ... ahora la tabla de símbolos tal como está en el arbol...
             for(i = 0; i < cantSignos; i++)
             {
                 byte signo = ht.getSigno(i);
@@ -131,12 +131,32 @@ public class Compresor
             // ... ahora el vector que representa al árbol...
             NodoHuffman a[] = ht.getArbol();
             int n = cantSignos * 2 - 1;  // cantidad total de nodos del árbol
-            for(i = 0; i < n; i++)
+            
+            // ... las hojas
+            for(i = 0; i < cantSignos; i++)
+            {
+                // ...por cada hoja, guardar los datos menos los hijos...
+                comprimido.writeInt( a[i].getFrecuencia() );
+                comprimido.writeInt( a[i].getPadre() );
+                comprimido.writeBoolean( a[i].isLeft() );
+            }
+            
+            // ... el resto de nodos
+            for(i = cantSignos; i < n-1; i++)
             {
                 // ...por cada nodo, guardar todos sus datos...
                 comprimido.writeInt( a[i].getFrecuencia() );
                 comprimido.writeInt( a[i].getPadre() );
                 comprimido.writeBoolean( a[i].isLeft() );
+                comprimido.writeInt( a[i].getIzquierdo());
+                comprimido.writeInt( a[i].getDerecho());
+            }
+            
+            // ... por ultimo la raiz
+            for(i = n - 1; i < n; i++)
+            {
+                // ...para la raiz, guardar sus datos menos su padre y si es izquierdo...
+                comprimido.writeInt( a[i].getFrecuencia() );
                 comprimido.writeInt( a[i].getIzquierdo());
                 comprimido.writeInt( a[i].getDerecho());
             }
@@ -289,7 +309,25 @@ public class Compresor
             
             // ...ahora le toca al vector del árbol...
             int n = cantSignos * 2 - 1;  // cantidad total de nodos del árbol
-            for(i = 0; i < n; i++)
+            
+            // ... las hojas
+            for(i = 0; i < cantSignos; i++)
+            {
+                // ...por cada nodo, guardar todos sus datos...
+                int f  = comprimido.readInt();           // frecuencia
+                int padre = comprimido.readInt();        // padre
+                boolean left = comprimido.readBoolean(); // es izquierdo?
+                
+                // ...
+                int hi = -1;                             // hijo izquierdo
+                int hd = -1;                             // hijo derecho
+                // ...
+                
+                NodoHuffman nh = new NodoHuffman( f, padre, left, hi, hd );
+                ht.setNodo( nh, i );
+            }
+            // ... el resto de nodos
+            for(i = cantSignos; i < n; i++)
             {
                 // ...por cada nodo, recuperar todos sus datos y volver a armar el árbol...
                 int f  = comprimido.readInt();           // frecuencia

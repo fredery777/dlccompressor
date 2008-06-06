@@ -4,7 +4,8 @@ package principal;
  * Representa un nodo del árbol de Huffman, que se implementa sobre un vector (por eso el nodo no tiene
  * "punteros" en el sentido clásico).
  * @author Ing. Valerio Frittelli
- * @version Octubre de 2004
+ * @author Morales, Gustavo - Roldán, Marco - Senn, Analía
+ * @version Junio de 2008
  */
 public class NodoHuffman
 {
@@ -21,16 +22,6 @@ public class NodoHuffman
     {
         padre = -1;             // aún no hay padre definido
         izq = der = -1;         // aún no hay hijos definidos
-    }
-    
-    /**
-     *  Constructor. Inicializa los atributos de las hojas
-     */
-    public NodoHuffman(int f, int p, boolean e)
-    {
-        frecuencia = f;
-        padre = p;
-        esIzquierdo = e;
     }
     
     /**
