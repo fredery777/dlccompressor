@@ -19,11 +19,17 @@ public class EstadosHilo implements Runnable
     private String accion = null;
     private boolean termino = false;
     
+    /**
+      * Llama al constructor por defecto
+      */
     public EstadosHilo()
     {
         compresor = new Compresor(this);
     }
     
+    /**
+      * El metodo comprime o descomprime en base Llama al método runmetodo terminar de la clase HiloCompresor
+      */
     public void run()
     {
         termino = false;
