@@ -283,6 +283,7 @@ public class VentanaInicio extends javax.swing.JFrame
         }
         else
         {
+            btnDetener.setEnabled(true);
             ejecutar(txtRutaComprimir.getText(), "comp");
         }
     }
@@ -299,6 +300,7 @@ public class VentanaInicio extends javax.swing.JFrame
         }
         else 
         {
+            btnDetener.setEnabled(true);
             ejecutar(txtRutaDescomprimir.getText(), "descomp");
         }
     }
@@ -306,13 +308,14 @@ public class VentanaInicio extends javax.swing.JFrame
     public void ejecutar(String archivo, String accion)
     {
         terminar = false;
-        hiloCompresor.ejecutar(archivo, accion, jpbProgreso);
+        hiloCompresor.ejecutar(archivo, accion, jpbProgreso, btnDetener);
     }
     
     public void terminar()
     {
         terminar = true;
         hiloCompresor.Terminar();
+        btnDetener.setEnabled(false);
         JOptionPane.showMessageDialog(this, "Proceso detenido por el usuario", "Error",JOptionPane.ERROR_MESSAGE);
     }
     

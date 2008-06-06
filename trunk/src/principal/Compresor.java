@@ -37,7 +37,7 @@ public class Compresor
      *  Retorna el archivo comprimido
      *  @param fileName el archivo a comprimir
      */
-    public void comprimir(String fileName, JProgressBar barra)
+    public void comprimir(String fileName, JProgressBar barra, JButton boton)
     {
         try
         {  
@@ -213,7 +213,9 @@ public class Compresor
             }
             comprimido.close();
             fuente.close();
+            
             barra.setString("Archivo comprimido!");
+            boton.setEnabled(false);
         }
         catch(IOException e)
         {
@@ -231,7 +233,7 @@ public class Compresor
      *  Retorna el archivo descomprimido
      *  @param fileName el archivo a descomprimir
      */
-    public void descomprimir(String fileName, JProgressBar barra)
+    public void descomprimir(String fileName, JProgressBar barra, JButton boton)
     {
         try
         {
@@ -376,7 +378,9 @@ public class Compresor
             }
             nuevo.close();
             comprimido.close();
+            
             barra.setString("Archivo descomprimido!");
+            boton.setEnabled(false);
         }
         catch(IOException e)
         {
