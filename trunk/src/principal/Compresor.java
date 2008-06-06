@@ -55,8 +55,8 @@ public class Compresor extends javax.swing.JOptionPane
             int i;
             byte car;
             
-            // progreso.getJProgressBar().setString("Creando Arbol de Huffman...");
-            // progreso.getJProgressBar().update(progreso.getJProgressBar().getGraphics());
+            //progreso.getJProgressBar().setString("Creando Arbol de Huffman...");
+            //progreso.getJProgressBar().update(progreso.getJProgressBar().getGraphics());
             
             int c[] = new int[256];  // un vector de contadores
             for(i=0; i<256; i++) { c[i] = 0; }
@@ -193,9 +193,9 @@ public class Compresor extends javax.swing.JOptionPane
                         {
                             avance = porcentaje;
                             System.out.println("Porcentaje de compresión: " + avance + "%");
-                            // progreso.getJProgressBar().setValue(avance);
-                            // progreso.getJProgressBar().setString(progreso.getNombre()+": "+progreso.getJProgressBar().getValue()+"%");
-                            // progreso.getJProgressBar().update(progreso.getJProgressBar().getGraphics());
+                             //progreso.getJProgressBar().setValue(avance);
+                             //progreso.getJProgressBar().setString(progreso.getNombre()+": "+progreso.getJProgressBar().getValue()+"%");
+                             //progreso.getJProgressBar().update(progreso.getJProgressBar().getGraphics());
                         }
 
                     }
@@ -216,8 +216,8 @@ public class Compresor extends javax.swing.JOptionPane
             }
             comprimido.close();
             fuente.close();
-            // progreso.setVisible(false);
-            // progreso.dispose();
+            //progreso.setVisible(false);
+            //progreso.dispose();
         }
         catch(IOException e)
         {
@@ -355,7 +355,7 @@ public class Compresor extends javax.swing.JOptionPane
                         cantBytes++;
 
                         // calculo el avance de la descompresión
-                        /*porcBytes = (float)((float)fuente.getFilePointer() / fuente.length()) * 100;
+                        porcBytes = (float)((float)cantBytes / tArch) * 100;
                         porcentaje =(int)porcBytes;    
                         if (porcentaje > avance)
                         {
@@ -364,7 +364,7 @@ public class Compresor extends javax.swing.JOptionPane
                             // progreso.getJProgressBar().setValue(avance);
                             // progreso.getJProgressBar().setString(progreso.getNombre()+": "+progreso.getJProgressBar().getValue()+"%");
                             // progreso.getJProgressBar().update(progreso.getJProgressBar().getGraphics());
-                        }*/
+                        }
 
                         // volver a la raiz
                         nodo = raiz;
