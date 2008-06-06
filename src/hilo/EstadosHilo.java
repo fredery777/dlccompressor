@@ -1,7 +1,7 @@
 package hilo;
 
-import grafica.*;
 import principal.*;
+import javax.swing.*;
 
 /**
  * Clase que define los estados del hilo que maneja la compresión y
@@ -11,7 +11,7 @@ import principal.*;
  */
 public class EstadosHilo implements Runnable
 {
-    private VentanaProgreso progreso = null;
+    private JProgressBar barra;
     private Compresor compresor = null;
     private String archivo = null;
     private String accion = null;
@@ -25,15 +25,15 @@ public class EstadosHilo implements Runnable
     public void run()
     {
         termino = false;
-        if(accion.compareTo("comp")==0) compresor.comprimir(archivo, progreso);
-        else compresor.descomprimir(archivo, progreso);
+        if(accion.compareTo("comp")==0) compresor.comprimir(archivo, barra);
+        else compresor.descomprimir(archivo, barra);
     }
     
-    public void setArchivo(String arch, String acc, VentanaProgreso prog)
+    public void setArchivo(String arch, String acc, JProgressBar barraProgreso)
     {
         archivo = arch;
         accion = acc;
-        progreso = prog;
+        barra = barraProgreso;
     }
     
     public boolean isTerminado()
