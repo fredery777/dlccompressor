@@ -372,6 +372,7 @@ public class VentanaInicio extends javax.swing.JFrame
         terminar = true;
         hiloCompresor.Terminar();
         btnDetener.setEnabled(false);
+        limpiar();
         JOptionPane.showMessageDialog(this, "Proceso detenido por el usuario", "Error",JOptionPane.ERROR_MESSAGE);
     }
     

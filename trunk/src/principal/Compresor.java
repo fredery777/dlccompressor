@@ -61,7 +61,6 @@ public class Compresor
             int c[] = new int[256];  // un vector de contadores
             for(i=0; i<256; i++) { c[i] = 0; }
             
-            
             // contamos los signos...
             while(fuente.getFilePointer() < fuente.length())
             {
@@ -82,6 +81,9 @@ public class Compresor
             {
                 fuente.close();
             }
+            
+            // comienzo a armar el árbol de Huffman
+            barra.setString("Armando el árbol de Huffman...");
             
             // creamos el Arbol con lugar para esa cantidad de signos
             ht = new ArbolHuffman(cantSignos); 
@@ -217,7 +219,6 @@ public class Compresor
                         }
                     }
                 }
-                
                 // el hilo sigue vivo?
                 if(estadoHilo.isTerminado())
                 {
@@ -225,7 +226,6 @@ public class Compresor
                     fuente.close();
                 }
             }
-
             if (bit != 0) 
             {
                 // grabar el último byte que estaba incompleto
@@ -285,8 +285,8 @@ public class Compresor
                     nuevo.close();
                 }
             
-            // empiezo a recontruir el árbol de Huffman
-            barra.setString("Recuperando el Arbol de Huffman...");
+            // empiezo a leer datos desde el archivo comprimido
+            barra.setString("Recuperando datos para descomprimir...");
             
             // y ahora, recupero todos los datos que el compresor deja adelante...
             
@@ -378,7 +378,7 @@ public class Compresor
                 comprimido.close();
                 nuevo.close();
             }
-            
+
             // leo byte por byte el archivo comprimido
             while(comprimido.getFilePointer() < comprimido.length())
             {
@@ -421,7 +421,6 @@ public class Compresor
                         nodo = raiz;
                     }
                 }
-                
                 // el hilo sigue vivo?
                 if(estadoHilo.isTerminado())
                 {
