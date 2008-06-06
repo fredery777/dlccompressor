@@ -189,13 +189,9 @@ public class Compresor
                         if (porcentaje > avance)
                         {
                             avance = porcentaje;
-                            System.out.println("Porcentaje de compresión: " + avance + "%");
                             barra.setValue(avance);
-                            //progreso.getJProgressBar().setValue(avance);
-                            //progreso.getJProgressBar().setString(progreso.getNombre()+": "+progreso.getJProgressBar().getValue()+"%");
-                            //progreso.getJProgressBar().update(progreso.getJProgressBar().getGraphics());
+                            barra.setName("Comprimiendo " + avance + "%");
                         }
-
                     }
                 }
                 
@@ -214,8 +210,7 @@ public class Compresor
             }
             comprimido.close();
             fuente.close();
-            //progreso.setVisible(false);
-            //progreso.dispose();
+            barra.setName("Archivo comprimido!");
         }
         catch(IOException e)
         {
@@ -358,10 +353,9 @@ public class Compresor
                         if (porcentaje > avance)
                         {
                             avance = porcentaje;
-                            System.out.println("Porcentaje de descompresión: " + avance + "%");
                             barra.setValue(avance);
+                            barra.setName("Descomprimiendo " + avance + "%");
                         }
-
                         // volver a la raiz
                         nodo = raiz;
                     }
@@ -376,6 +370,7 @@ public class Compresor
             }
             nuevo.close();
             comprimido.close();
+            barra.setName("Archivo descomprimido!");
         }
         catch(IOException e)
         {
