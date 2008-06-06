@@ -24,7 +24,6 @@ public class HiloCompresor
     {
         if(!hilo.isAlive())
         {
-            System.out.println("Procesando archivos...");
             estadosHilo.setArchivo(archivo, accion, barra, boton);
             hilo = new Thread(estadosHilo);
             hilo.start();
@@ -33,11 +32,6 @@ public class HiloCompresor
         {
             System.out.println("Espere, comprimiendo...");
         }
-    }
-    
-    public void finEjecucion()
-    {
-        System.out.println("Fin de compresión!");
     }
     
     public void Terminar()

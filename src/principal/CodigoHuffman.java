@@ -51,7 +51,6 @@ public class CodigoHuffman
         if (startPos == 0) 
         {
             // Esta salida por consola está para la fase de prueba... no debe ir si el proyecto ya fue testeado...
-            //System.out.println("Código muy largo");
             System.exit(1);
         }
         startPos--;

@@ -56,7 +56,7 @@ public class Compresor
             byte car;
             
             // empiezo a recorrer el archivo para armar el árbol de Huffman
-            barra.setString("Analizando el archivo....");
+            barra.setString("Armando el árbol de Huffman...");
             
             int c[] = new int[256];  // un vector de contadores
             for(i=0; i<256; i++) { c[i] = 0; }
@@ -81,9 +81,6 @@ public class Compresor
             {
                 fuente.close();
             }
-            
-            // comienzo a armar el árbol de Huffman
-            barra.setString("Armando el árbol de Huffman...");
             
             // creamos el Arbol con lugar para esa cantidad de signos
             ht = new ArbolHuffman(cantSignos); 
