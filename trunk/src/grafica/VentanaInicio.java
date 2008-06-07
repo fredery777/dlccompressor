@@ -18,7 +18,7 @@ public class VentanaInicio extends javax.swing.JFrame
     private int porcentaje;
     private int pCompletado;
     private boolean terminar;
-    private HiloCompresor hiloCompresor = null;
+    private HiloCompresor hiloCompresor;
     Object[] opciones = {"Si", "No"};
     
     /** Creates new form VentanaInicial */
@@ -361,7 +361,10 @@ public class VentanaInicio extends javax.swing.JFrame
     public void ejecutar(String archivo, String accion)
     {
         terminar = false;
-        hiloCompresor.ejecutar(archivo, accion, jpbProgreso, btnDetener);
+        if(hiloCompresor.ejecutar(archivo, accion, jpbProgreso, btnDetener))
+        {
+            JOptionPane.showMessageDialog(this, "Se esta pocesando otro archivo!", "Info",JOptionPane.INFORMATION_MESSAGE);
+        }
     }
     
     /**
