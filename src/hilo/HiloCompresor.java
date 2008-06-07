@@ -28,20 +28,24 @@ public class HiloCompresor
       * de un archivo, sino informa que se debe terminar primero de procesar
       * el archivo anterior
       */
-    public void ejecutar(String archivo, String accion, JProgressBar barra, JButton boton)
+    public boolean ejecutar(String archivo, String accion, JProgressBar barra, JButton boton)
     {
         if(!hilo.isAlive())
         {
             estadosHilo.setArchivo(archivo, accion, barra, boton);
             hilo = new Thread(estadosHilo);
             hilo.start();
+            return false;
         }
         else
         {
-            System.out.println("Espere, comprimiendo...");
+            return true;
         }
     }
     
+    /**
+      * Manda a setear que el hilo debe terminar
+      */
     public void setTerminar()
     {
         estadosHilo.setTerminado();
